@@ -1,3 +1,2 @@
-# H-EHE-SOC VHDL assignment 1
-
+# D-H-EHE-SOC VHDL assignment 0
 

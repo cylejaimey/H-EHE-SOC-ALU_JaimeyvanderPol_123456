@@ -5,6 +5,17 @@
 --! \author    Remko Welling (WLGRW) remko.welling@han.nl
 --! \copyright HAN TF ELT/ESE Arnhem 
 --!
+--! \todo Students that submit this code have to complete their details:
+--!
+--! Student 1 name         : 
+--! Student 1 studentnumber: 
+--! Student 1 email address: 
+--!
+--! Student 2 name         : 
+--! Student 2 studentnumber: 
+--! Student 2 email address: 
+--!
+--!
 --! Version History:
 --! ----------------
 --!
@@ -15,6 +26,8 @@
 --! 003    |17-10-2019 |WLGRW   |Updated for use in LOGCIR labs
 --! 004    |22-12-2019 |WLGRW   |added constants for all numbers and signs
 --! 005    |25-11-2020 |WLGRW   |Updated for H-EHE-SOC class
+--!
+--! \todo Add revsion history when executing these assignments.
 --!
 --! 
 --! 
@@ -44,7 +57,7 @@
 
 --! Design:
 --! -------
---! Figure 2 presents the input-output diagram of teh 7 out of 4 decoder.
+--! Figure 2 presents the input-output diagram of the 7 out of 4 decoder.
 --! 
 --! \verbatim
 --!

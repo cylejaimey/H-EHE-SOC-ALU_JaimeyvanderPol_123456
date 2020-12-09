@@ -25,6 +25,8 @@
 --! 001    |18-10-2019 |WLGRW   |Inital version
 --! 002    |15-11-2020 |WLGRW   |Adapted version for H-EHE-SOC class
 --! 003    |26-11-2020 |WLGRW   |Added student information, pin assignments, assignment description.
+--! 
+--! \todo Add revsion history when executing these assignments.
 --!
 --! \verbatim
 --!

@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! Student 1 name         : 
---! Student 1 studentnumber: 
---! Student 1 email address: 
---!
---! Student 2 name         : 
---! Student 2 studentnumber: 
---! Student 2 email address: 
+--! -Student 1 name         : 
+--! -Student 1 studentnumber: 
+--! -Student 1 email address: 
+--! 
+--! -Student 2 name         : 
+--! -Student 2 studentnumber: 
+--! -Student 2 email address: 
 --!
 --!
 --! Version History:
@@ -64,7 +64,6 @@
 --! 101 | OP_ROLA | ROL A, R:=ROL A,                       flag bits are not affected
 --! 110 | OP_SHRA | SHR A, R:=SHR A,                       flag bits are not affected
 --! 111 | OP_RORA | ROR A, R:=ROR A,                       flag bits are not affected
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;

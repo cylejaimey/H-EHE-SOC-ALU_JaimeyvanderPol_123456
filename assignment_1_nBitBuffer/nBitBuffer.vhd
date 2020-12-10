@@ -8,13 +8,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! Student 1 name         : 
---! Student 1 studentnumber: 
---! Student 1 email address: 
+--! - Student 1 name         : 
+--! - Student 1 studentnumber: 
+--! - Student 1 email address: 
 --!
---! Student 2 name         : 
---! Student 2 studentnumber: 
---! Student 2 email address: 
+--! - Student 2 name         : 
+--! - Student 2 studentnumber: 
+--! - Student 2 email address: 
 --!
 --!
 --! Version History:
@@ -102,7 +102,7 @@
 --!               3 2 1 0  <- input[3..0]
 --!
 --! \endverbatim
-
+--!
 --! Assignment
 --! ----------
 --!
@@ -135,7 +135,6 @@
 --! ------------
 --! Test both ARCHITECTUREs by programming the project on a DE10-Lite.
 --! 
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;

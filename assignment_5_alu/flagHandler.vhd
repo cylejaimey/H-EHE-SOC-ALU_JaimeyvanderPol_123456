@@ -1,3 +1,14 @@
+--  #########################################################################
+--  #########################################################################
+--  ##                                                                     ##
+--  ##                                                                     ##
+--  ## The flag-handler is delivered as is and is not part of assignments  ##
+--  ##                                                                     ##
+--  ##      No modification or adaptations by students are required        ##
+--  ##                                                                     ##
+--  #########################################################################
+--  #########################################################################
+
 --------------------------------------------------------------------
 --! \file      flagHandler.vhd
 --! \date      see top of 'Version History'
@@ -13,18 +24,6 @@
 --! 001    |24-11-2020 |WLGRW   |Inital version
 --! 002    |25-11-2020 |WLGRW   |Adpted version for H-EHE-SOC class
 --!
-
---  #########################################################################
---  #########################################################################
---  ##                                                                     ##
---  ##                                                                     ##
---  ## The flag-handler is delivered as is and is not part of assignments  ##
---  ##                                                                     ##
---  ##      No modification or adaptations by students are required        ##
---  ##                                                                     ##
---  #########################################################################
---  #########################################################################
-
 --! Map named signals to flag register for output flagResult consists of 4 flags:
 --!  - Carry (C-flag)
 --!  - Sign (S-flag)
@@ -32,8 +31,7 @@
 --!  - Zero (Z-Flag)
 --!
 --! flagResult has the bit sequence CSVZ (C = MSB).
-
-
+--!
 --!   Bin  | Opcode  | Functionality/Operation
 --!   -----|---------|--------------------------------------------------------------------------------------
 --!   0000 | OP_CLRR | CLR R, clear R (R:=0), all flag bits are affected
@@ -53,7 +51,6 @@
 --!   1101 | OP_ROLA | ROL A, R:=ROL A, flag bits are not affected
 --!   1110 | OP_SHRA | SHR A, R:=SHR A, flag bits are not affected
 --!   1111 | OP_RORA | ROR A, R:=ROR A, flag bits are not affected
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  -- STD_LOGIC

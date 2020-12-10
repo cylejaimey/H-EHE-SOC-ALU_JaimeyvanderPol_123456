@@ -6,7 +6,6 @@
 --! \copyright HAN TF ELT/ESE Arnhem 
 --!
 --! \todo Students shall replace this file for the result of assignment 4
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC

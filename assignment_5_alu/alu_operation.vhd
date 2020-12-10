@@ -13,7 +13,6 @@
 --! 001    |25-11-2020 |WLGRW   |Inital version
 --! 002    |10-12-2020 |WLGRW   |Added documentation
 --!
-
 --! Function:
 --! -----------
 --! The ALU-operation component combines the Arithmetic- and logic-unit in to 
@@ -29,7 +28,7 @@
 --! The flaghandler is implemented already, but not completely.
 --! The student is free to enhance it and verify operation.
 --! This is not mandatory.
-
+--!
 --! Design:
 --! -------
 --! Figure 1 presents the component diagram of the ALU-operation component.
@@ -80,7 +79,6 @@
 --!                              |                |  
 --!                              +----------------+  
 --! \endverbatim
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC

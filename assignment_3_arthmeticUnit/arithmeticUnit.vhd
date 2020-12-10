@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! Student 1 name         : 
---! Student 1 studentnumber: 
---! Student 1 email address: 
---!
---! Student 2 name         : 
---! Student 2 studentnumber: 
---! Student 2 email address: 
+--! -Student 1 name         : 
+--! -Student 1 studentnumber: 
+--! -Student 1 email address: 
+--! 
+--! -Student 2 name         : 
+--! -Student 2 studentnumber: 
+--! -Student 2 email address: 
 --!
 --!
 --! Version History:
@@ -70,7 +70,6 @@
 --! 110 | OP_SUB  | SUB B from A, R:=A-B, flag bits are affected
 --! 111 | OP_SBC  | SBC B from A including C, R:=A-B-C, flag bits are affected
 --! 
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC

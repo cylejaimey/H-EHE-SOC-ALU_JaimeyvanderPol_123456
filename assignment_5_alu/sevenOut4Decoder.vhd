@@ -6,7 +6,6 @@
 --! \copyright HAN TF ELT/ESE Arnhem 
 --!
 --! \todo Students shall replace this file for the result of assignment 2
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -23,9 +22,6 @@ ENTITY sevenOut4Decoder is
 END ENTITY sevenOut4Decoder;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation OF sevenOut4Decoder IS
-   
-   -- add here signals to your descretion
-   
 BEGIN
 
 --  #########################################################################

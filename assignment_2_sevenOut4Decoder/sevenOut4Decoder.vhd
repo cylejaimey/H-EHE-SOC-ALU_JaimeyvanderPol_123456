@@ -1,5 +1,5 @@
 --------------------------------------------------------------------
---! \file      lsevenOut4Decoder.vhd
+--! \file      sevenOut4Decoder.vhd
 --! \date      see top of 'Version History'
 --! \brief     7 segment decoder with dot-driver and extended characters
 --! \author    Remko Welling (WLGRW) remko.welling@han.nl
@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! Student 1 name         : 
---! Student 1 studentnumber: 
---! Student 1 email address: 
+--! -Student 1 name         : 
+--! -Student 1 studentnumber: 
+--! -Student 1 email address: 
 --!
---! Student 2 name         : 
---! Student 2 studentnumber: 
---! Student 2 email address: 
+--! -Student 2 name         : 
+--! -Student 2 studentnumber: 
+--! -Student 2 email address: 
 --!
 --!
 --! Version History:
@@ -53,8 +53,7 @@
 --!        5   4   3   2   1   0     9 8 7 6 5 4 3 2 1 0  <- Number
 --!
 --! \endverbatim
-
-
+--!
 --! Design:
 --! -------
 --! Figure 2 presents the input-output diagram of the 7 out of 4 decoder.
@@ -102,7 +101,6 @@
 --!
 --! \endverbatim
 --!
-
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;

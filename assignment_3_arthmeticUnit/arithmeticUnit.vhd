@@ -79,7 +79,7 @@ USE ieee.numeric_std.all;     --! SIGNED
 ENTITY arithmeticUnit is
 
    GENERIC (
-      N: INTEGER := 4;  --! logic unit is designed for 4-bits
+      N: INTEGER := 4  --! logic unit is designed for 4-bits
       
       --! Implement here CONSTANTS as GENERIC when required.
       

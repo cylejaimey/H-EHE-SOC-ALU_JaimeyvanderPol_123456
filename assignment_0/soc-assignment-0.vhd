@@ -45,7 +45,7 @@
 --!        5   4   3   2   1   0     9 8 7 6 5 4 3 2 1 0  <- Number
 --!
 --! \endverbatim
-
+--!
 --! Function 1:
 --! -----------
 --! This function is ports 'a' and 'b' as input and prt 'c' as output.
@@ -69,8 +69,7 @@
 --!                   1 0  <- Number
 --!
 --! \endverbatim
-
-   
+--!   
 --! Function 2:
 --! -----------
 --! This function is using ports 'p' and 'q' as input 
@@ -94,8 +93,7 @@
 --!               3 2      <- Number
 --!
 --! \endverbatim
-
-
+--!
 --! Function 3:
 --! -----------
 --! This function is using ports 'p', 'v', 'w', and 'x' as input 
@@ -119,10 +117,6 @@
 --!       7 6 5 4          <- Number
 --!
 --! \endverbatim
-
-
-
-
 --------------------------------------------------------------------
 LIBRARY ieee;                      -- this lib needed for STD_LOGIC
 USE ieee.std_logic_1164.all;       -- the package with this info

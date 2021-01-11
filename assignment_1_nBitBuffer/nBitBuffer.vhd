@@ -129,7 +129,7 @@
 --! 
 --! Assignment-C
 --! ------------
---! Test both ARCHITECTUREs using waveforms and present teh result.
+--! Test both ARCHITECTUREs using waveforms and present the result.
 --! 
 --! Assignment-D
 --! ------------

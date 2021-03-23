@@ -24,6 +24,7 @@
 --! 001    |22-10-2019 |WLGRW   |Inital version
 --! 002    |25-11-2020 |WLGRW   |Adapted version for H-EHE-SOC class
 --! 003    |19-12-2020 |WLGRW   |Version created to be used as assignment
+--! 004    |23-03-2021 |WLGRW   |Correction of documentation and input-output-diagram
 --!
 --! \todo Add revsion history when executing these assignments.
 --!
@@ -75,14 +76,14 @@
 --!                 |                |---/--- hexSignal 0     \
 --!             4   |                |                        |
 --!  Result ----/---|                |------- dotSignal 0     +-> 1st 7-segment display
---!                 |              t |                        |
+--!                 |                |                        |
 --!             4   |    Operand     |------- controlSignal 0 /
 --!  Opcode ----/---|     result     |   4
---!                 |   Interpreter  |---/--- hexSignal 0     \
+--!                 |   Interpreter  |---/--- hexSignal 1     \
 --!                 |                |                        |
---!  Signed ops ----|                |------- dotSignal 0     +-> 2nd 7-segment display
+--!  Signed ops ----|                |------- dotSignal 1     +-> 2nd 7-segment display
 --!                 |                |                        |
---!                 |                |------- controlSignal 0 /
+--!                 |                |------- controlSignal 1 /
 --!                 +----------------+
 --!
 --! \endverbatim

@@ -180,13 +180,13 @@ BEGIN
 --! used for the assignment. The leds ares switched off by assigning
 --! a logic '0' to the port.
 
-   l0 <= '0';  -- Switch off LED 0
-   l2 <= '0';  -- Switch off LED 2
-   l4 <= '0';  -- Switch off LED 4
-   l5 <= '0';  -- Switch off LED 5
-   l6 <= '0';  -- Switch off LED 6
-   l8 <= '0';  -- Switch off LED 8
-   l9 <= '0';  -- Switch off LED 9
+--   l0 <= '0';  -- Switch off LED 0
+--   l2 <= '0';  -- Switch off LED 2
+--   l4 <= '0';  -- Switch off LED 4
+--   l5 <= '0';  -- Switch off LED 5
+--   l6 <= '0';  -- Switch off LED 6
+--   l8 <= '0';  -- Switch off LED 8
+--   l9 <= '0';  -- Switch off LED 9
 
 END ARCHITECTURE implementation;
 --------------------------------------------------------------------

@@ -1,14 +1,3 @@
---  #########################################################################
---  #########################################################################
---  ##                                                                     ##
---  ##                                                                     ##
---  ## The flag-handler is delivered as is and is not part of assignments  ##
---  ##                                                                     ##
---  ##      No modification or adaptations by students are required        ##
---  ##                                                                     ##
---  #########################################################################
---  #########################################################################
-
 --------------------------------------------------------------------
 --! \file      flagHandler.vhd
 --! \date      see top of 'Version History'
@@ -22,15 +11,18 @@
 --! Nr:    |Date:      |Author: |Remarks:
 --! -------|-----------|--------|-----------------------------------
 --! 001    |24-11-2020 |WLGRW   |Inital version
---! 002    |25-11-2020 |WLGRW   |Adpted version for H-EHE-SOC class
+--! 002    |25-11-2020 |WLGRW   |Adapted version for H-EHE-SOC class
+--! 003    |7-4-2021 0 |WLGRW   |Corrected Zero flag handling 
 --!
 --! Map named signals to flag register for output flagResult consists of 4 flags:
 --!  - Carry (C-flag)
 --!  - Sign (S-flag)
 --!  - oVerflow (V-flag)
 --!  - Zero (Z-Flag)
---!
 --! flagResult has the bit sequence CSVZ (C = MSB).
+--!
+--! Opcodes
+--! -------
 --!
 --!   Bin  | Opcode  | Functionality/Operation
 --!   -----|---------|--------------------------------------------------------------------------------------
@@ -42,7 +34,6 @@
 --!   0101 | OP_ADB  | ADB A with B and Carry, R:=A+B+C using BCD arithmetic, C and Z flag bits are affected
 --!   0110 | OP_SUB  | SUB B from A, R:=A-B, flag bits are affected
 --!   0111 | OP_SBC  | SBC B from A including C, R:=A-B-C, flag bits are affected
---!
 --!   1000 | OP_AND  | AND A with B, R:=A AND B, bitwise AND, Z-flag bit is affected
 --!   1001 | OP_OR   | OR A with B, R:=A OR B, bitwise OR, Z-flag bit is affected
 --!   1010 | OP_XOR  | XOR A with B, R:=A XOR B, bitwise XOR, Z-flag bit is affected
@@ -51,6 +42,19 @@
 --!   1101 | OP_ROLA | ROL A, R:=ROL A, flag bits are not affected
 --!   1110 | OP_SHRA | SHR A, R:=SHR A, flag bits are not affected
 --!   1111 | OP_RORA | ROR A, R:=ROR A, flag bits are not affected
+
+
+--  #########################################################################
+--  #########################################################################
+--  ##                                                                     ##
+--  ##                                                                     ##
+--  ## The flag-handler is delivered as is and is not part of assignments  ##
+--  ##                                                                     ##
+--  ##      No modification or adaptations by students are required        ##
+--  ##                                                                     ##
+--  #########################################################################
+--  #########################################################################
+
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  -- STD_LOGIC
@@ -101,6 +105,7 @@ BEGIN
    --!
    oVerflowFlag <= '1' WHEN (opcode(3 DOWNTO 1) = "010" AND operandA(3)=operandB(3)     AND arithmeticresult(3)=NOT operandA(3)) OR   -- for ADD and ADC
                             (opcode(3 DOWNTO 1) = "011" AND operandA(3)=NOT operandB(3) AND arithmeticresult(3)=NOT operandA(3)) ELSE -- for SUB and SBC
+                   '1' WHEN (opcode = "0101" AND SIGNED(arithmeticresult) > 9) OR (opcode = "0101" AND SIGNED(arithmeticresult) < -9) ELSE
                    '0' WHEN  opcode(3 DOWNTO 2) = "01" ELSE
                    UNAFFECTED;
 
@@ -108,8 +113,9 @@ BEGIN
    signFlag <= signedOperation;
    
    --! Z-flag looks only at content of c, independant of (un)signed:
-   zeroFlag <= '1' WHEN (UNSIGNED(opcode) < "1100") AND (arithmeticresult = "00000") ELSE
-               '0' WHEN (UNSIGNED(opcode) < "1100") ELSE
+   zeroFlag <= '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "00000") ELSE -- Arthmic operation result is 0 and no carry
+               '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "10000") ELSE -- Arthmic operation result is 0 with carry
+               '0' WHEN (UNSIGNED(opcode) < "1000") ELSE
                UNAFFECTED;
 
 END ARCHITECTURE implementation;

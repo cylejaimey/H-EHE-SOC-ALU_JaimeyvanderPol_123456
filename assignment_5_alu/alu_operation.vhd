@@ -77,7 +77,7 @@
 --!             |  |  |  |       |                |
 --!             |  |  |  |   n   |     Flag-      |
 --!             |  |  |  +---/---|                |
---!             |  |  |          |     handle     |
+--!             |  |  |          |     handler    |
 --!             |  |  |      n   |                |
 --!             |  |  +------/---|                |
 --!             |  |             |                |                           4
@@ -95,6 +95,8 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC
 USE ieee.numeric_std.all;     --! SIGNED
+library WORK;
+USE WORK.all;
 ------------------------------------------------------------------------------
 ENTITY alu_operation is
 
@@ -129,7 +131,7 @@ BEGIN
    operation(2) <= F(2);
 
    --! artihmetic units:
-   artihmeticUnit : work.arithmeticUnit port map ( 
+   artihmeticUnit : ENTITY work.arithmeticUnit PORT MAP ( 
       A,                        --! A: n-bit binary input
       B,                        --! B: n-bit binary input
       P,                        --! P: 4-bit Flags
@@ -138,7 +140,7 @@ BEGIN
    );
 
    --! Logic unit
-   logicUnit : work.logicUnit port map (    
+   logicUnit : ENTITY work.logicUnit PORT MAP (    
       A,          --! A: n-bit binary input
       B,          --! B: n-bit binary input
       operation,  --! F: 3-bit opcode (function)
@@ -158,7 +160,7 @@ BEGIN
         
 
    --! flag handler
-   flagOperation: work.flagHandler port map (
+   flagOperation: ENTITY work.flagHandler PORT MAP (
       O,                         --! Signed operation
       A,
       B,

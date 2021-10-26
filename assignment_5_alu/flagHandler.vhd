@@ -99,15 +99,14 @@ BEGIN
 --! FLAG handling
    
    --! Transport carry from arithmetic result to carry flag.
-   carryFlag <= arithmeticresult(4) WHEN opcode(3)='0' ELSE
-                UNAFFECTED;
+   carryFlag <= arithmeticresult(4) WHEN opcode(3)='0';
 
    --!
    oVerflowFlag <= '1' WHEN (opcode(3 DOWNTO 1) = "010" AND operandA(3)=operandB(3)     AND arithmeticresult(3)=NOT operandA(3)) OR   -- for ADD and ADC
                             (opcode(3 DOWNTO 1) = "011" AND operandA(3)=NOT operandB(3) AND arithmeticresult(3)=NOT operandA(3)) ELSE -- for SUB and SBC
                    '1' WHEN (opcode = "0101" AND SIGNED(arithmeticresult) > 9) OR (opcode = "0101" AND SIGNED(arithmeticresult) < -9) ELSE
                    '0' WHEN  opcode(3 DOWNTO 2) = "01" ELSE
-                   UNAFFECTED;
+                   oVerflowFlag;
 
    --! 
    signFlag <= signedOperation;
@@ -116,7 +115,7 @@ BEGIN
    zeroFlag <= '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "00000") ELSE -- Arthmic operation result is 0 and no carry
                '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "10000") ELSE -- Arthmic operation result is 0 with carry
                '0' WHEN (UNSIGNED(opcode) < "1000") ELSE
-               UNAFFECTED;
+               zeroFlag;
 
 END ARCHITECTURE implementation;
 ------------------------------------------------------------------------------

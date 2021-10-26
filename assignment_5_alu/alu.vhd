@@ -11,8 +11,10 @@
 --! Nr:    |Date:      |Author: |Remarks:
 --! -------|-----------|--------|-----------------------------------
 --! 101    |25-11-2020 |WLGRW   |Inital version building upon version 002 for H-EHE-SOC class
+--! 102    |26-10-2021 |WLGRW   |Added ENTITY to instatiation for compatibilty reasons in ModelSim
 --!
---! 
+--! # Layout DE10-Lite
+--!
 --! \verbatim
 --!                                                  +--+
 --!      DE10-Lite KEY, SW, LED, and HEX layout      |##| <= KEY0
@@ -103,21 +105,21 @@ BEGIN
 --! Registers:
 
    --! Function register "FUNC-REG" use KEY0 as clk
-   functionRegister : work.nBitBuffer port map ( 
+   functionRegister : ENTITY work.nBitBuffer PORT MAP ( 
       operandA, 
       NOT KEY(OPCODE_KEY), 
       opCode 
    );
    
    --! First part of Output register "OUT-REG" use KEY1 as clk
-   resultRegister : work.nBitBuffer port map (
+   resultRegister : ENTITY work.nBitBuffer PORT MAP (
       operationResult, 
       NOT KEY(EXECUTE_KEY), 
       displayResult
    );
    
    --! Second part of Output register "OUT-REG" use KEY1 as clk
-   flagRegister : work.nBitBuffer port map (
+   flagRegister : ENTITY work.nBitBuffer PORT MAP (
       flagResult, 
       NOT KEY(EXECUTE_KEY), 
       displayFlags
@@ -125,15 +127,15 @@ BEGIN
 
    --! 7-segment Displays:
    --! Here the HEX displays are immediately connected to the drivers
-   hexDisplay0 : work.sevenOut4Decoder port map ( hexSignal0, dotSignal0, control0, HEX0 ); --! 7-segment decoder 0
-   hexDisplay1 : work.sevenOut4Decoder port map ( hexSignal1, dotSignal1, control1, HEX1 ); --! 7-segment decoder 1
-   hexDisplay2 : work.sevenOut4Decoder port map ( hexSignal2, dotSignal2, control2, HEX2 ); --! 7-segment decoder 2
-   hexDisplay3 : work.sevenOut4Decoder port map ( hexSignal3, dotSignal3, control3, HEX3 ); --! 7-segment decoder 3
-   hexDisplay4 : work.sevenOut4Decoder port map ( hexSignal4, dotSignal4, control4, HEX4 ); --! 7-segment decoder 4
-   hexDisplay5 : work.sevenOut4Decoder port map ( hexSignal5, dotSignal5, control5, HEX5 ); --! 7-segment decoder 5
+   hexDisplay0 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal0, dotSignal0, control0, HEX0 ); --! 7-segment decoder 0
+   hexDisplay1 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal1, dotSignal1, control1, HEX1 ); --! 7-segment decoder 1
+   hexDisplay2 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal2, dotSignal2, control2, HEX2 ); --! 7-segment decoder 2
+   hexDisplay3 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal3, dotSignal3, control3, HEX3 ); --! 7-segment decoder 3
+   hexDisplay4 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal4, dotSignal4, control4, HEX4 ); --! 7-segment decoder 4
+   hexDisplay5 : ENTITY work.sevenOut4Decoder PORT MAP ( hexSignal5, dotSignal5, control5, HEX5 ); --! 7-segment decoder 5
    
    --! ALU
-   aluOperation: work.alu_operation port map (
+   aluOperation: ENTITY work.alu_operation PORT MAP (
       operandA,
       operandB,
       displayFlags,
@@ -144,7 +146,7 @@ BEGIN
    );
 
    --! Display drivers
-   displayDriverResult : work.operandResultInterpreter port map (
+   displayDriverResult : ENTITY work.operandResultInterpreter PORT MAP (
       opCode,       --! opcode:     4-bit opcode
       displayResult,--! res:        4-bit binary input carrying Result
       signedMode,   --! sign_ops:   Sign operation
@@ -156,7 +158,7 @@ BEGIN
       control1      --! control1 :  Select control operation of HEX1
    );
 
-   displayDriverOperandA : work.operandResultInterpreter port map (
+   displayDriverOperandA : ENTITY work.operandResultInterpreter PORT MAP (
       opCode,       --! opcode:     4-bit opcode
       operandA,     --! res:        4-bit binary input carrying Operand A
       signedMode,   --! sign_ops:   Sign operation
@@ -168,7 +170,7 @@ BEGIN
       control5      --! control1 :  Select control operation of HEX5
    );
    
-   displayDriverOperandB : work.operandResultInterpreter port map (
+   displayDriverOperandB : ENTITY work.operandResultInterpreter PORT MAP (
       opCode,       --! opcode:     4-bit opcode
       operandB,     --! res:        4-bit binary input carrying operand B
       signedMode,   --! sign_ops:   Sign operation
@@ -211,7 +213,7 @@ BEGIN
    signedMode <= SW(8);
    LEDR(8) <= signedMode;
    
-   --! Switch off LED 9
+--   LEDR(8) <= '0';
    LEDR(9) <= '0';
 
 END ARCHITECTURE implementation;

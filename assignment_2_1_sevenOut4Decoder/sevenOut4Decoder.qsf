@@ -231,5 +231,5 @@ set_location_assignment PIN_C11 -to input[1] -comment SW[1]
 set_location_assignment PIN_D12 -to input[2] -comment SW[2]
 set_location_assignment PIN_C12 -to input[3] -comment SW[3]
 set_location_assignment PIN_F15 -to ctrl -comment SW[9]
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

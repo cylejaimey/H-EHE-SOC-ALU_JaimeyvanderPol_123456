@@ -233,4 +233,7 @@ set_location_assignment PIN_E14 -to l6 -comment LEDR[6]
 set_location_assignment PIN_A11 -to l8 -comment LEDR[8]
 set_location_assignment PIN_B11 -to l9 -comment LEDR[9]
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_function_1.vwf
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf

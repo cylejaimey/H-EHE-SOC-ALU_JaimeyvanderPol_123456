@@ -51,8 +51,7 @@
 --!
 --! \endverbatim
 --!
---! Function description
---! ------------
+--! # Function description
 --!
 --! With this assignment a n-bit buffer will be implemented.
 --!
@@ -103,8 +102,7 @@
 --!
 --! \endverbatim
 --!
---! Assignment
---! ----------
+--! # Assignment
 --!
 --! This assignment is split in to 4 tasks:
 --!  A: Implement the n-bit buffer using concurent code in implementation 1
@@ -114,27 +112,34 @@
 --!  C: Test the functionality of both ARCHITECTUREs using a waveform.
 --!  D: Test the functionality of both ARCHITECTUREs using the DE10-Lite board.
 --!
---! Assignment-A
---! ------------
+--! ## Assignment-A
+--! 
 --! Write VHDL code that implements the n-bit buffer using concurrent code.
 --! 
 --! See Pedroni paragraph "5.6 Implementing Sequential Circuits with 
 --! Concurrent Code" for an explanation.
 --! 
---! Assignment-B
---! ------------
+--! ## Assignment-B
+--! 
 --! Write VHDL code that implements the n-bit buffer using sequential code.
 --! 
 --! See Pedroni "example 6.1: DFFs with reset and Clear" for a example.
 --! 
---! Assignment-C
---! ------------
+--! ## Assignment-C
+--! 
 --! Test both ARCHITECTUREs using waveforms and present the result.
 --! 
---! Assignment-D
---! ------------
+--! ## Assignment-D
+--! 
 --! Test both ARCHITECTUREs by programming the project on a DE10-Lite.
 --! 
+--!
+--! # Architecture selection
+--! 
+--! Select the architecture for compilation by uncommenting the architecture:
+--!
+--! - Uncomment to ARCHITECTURE implementation0 to select concurrent implementation
+--! - Uncomment to ARCHITECTURE implementation1 to select sequential implementation
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -152,13 +157,6 @@ ENTITY nBitBuffer is
    );
    
 END ENTITY nBitBuffer;
-------------------------------------------------------------------
---! Select here the architecture for compilation by uncommenting the architecture:
-CONFIGURATION which_architecture OF nBitBuffer IS
---   FOR implementation0 --! uncomment to select concurrent implementation
-   FOR implementation1 --! uncomment to select sequential implementation
-   END FOR;
-END CONFIGURATION;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation0 OF nBitBuffer IS
 BEGIN
@@ -167,10 +165,10 @@ BEGIN
 
 END ARCHITECTURE implementation0;
 ------------------------------------------------------------------------------
-ARCHITECTURE implementation1 OF nBitBuffer IS
-BEGIN
-
---! Assignment-B: Implement here the sequential VHDL code for the n-bit Buffer
-
-END ARCHITECTURE implementation1;
+--ARCHITECTURE implementation1 OF nBitBuffer IS
+--BEGIN
+--
+----! Assignment-B: Implement here the sequential VHDL code for the n-bit Buffer
+--
+--END ARCHITECTURE implementation1;
 ------------------------------------------------------------------------------

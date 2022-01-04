@@ -12,6 +12,7 @@
 --! -------|-----------|--------|-----------------------------------
 --! 101    |25-11-2020 |WLGRW   |Inital version building upon version 002 for H-EHE-SOC class
 --! 102    |26-10-2021 |WLGRW   |Added ENTITY to instatiation for compatibilty reasons in ModelSim
+--! 103    |04010-2021 |WLGRW   |Added ENTITY to instatiation for compatibilty reasons in ModelSim
 --!
 --! # Layout DE10-Lite
 --!
@@ -52,6 +53,7 @@
 --!
 --!
 --!
+
 
 --------------------------------------------------------------------
 LIBRARY ieee;                      -- this lib needed for STD_LOGIC

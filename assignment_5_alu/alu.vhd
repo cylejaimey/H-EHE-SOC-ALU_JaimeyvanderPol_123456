@@ -35,6 +35,24 @@
 --!        5   4   3   2   1   0     9 8 7 6 5 4 3 2 1 0  <- Number
 --!
 --! \endverbatim
+--!
+--!
+--!
+--! \verbatim
+--!                                  9 8 7 6 5 4 3 2 1 0  <- Number
+--!                                 +-+-+-+-+-+-+-+-+-+-+
+--!                                 | | | | | | | | | | | <= Leds (LEDR)
+--!                                 +-+-+-+-+-+-+-+-+-+-+
+--!                                              ^ ^ ^ ^
+--!                                              | | | +- Zero
+--!                                              | | +--- Overflow
+--!                                              | +----- Signed
+--!                                              +------- Carry
+--! \endverbatim
+--!
+--!
+--!
+
 --------------------------------------------------------------------
 LIBRARY ieee;                      -- this lib needed for STD_LOGIC
 USE ieee.std_logic_1164.all;       -- the package with this info

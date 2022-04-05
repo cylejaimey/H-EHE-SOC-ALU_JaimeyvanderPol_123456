@@ -2,6 +2,16 @@
 
 Project templates and materials for the VHDL ALU assignment.
 
+# Courses
+
+This library is used in the following coures: 
+
+ - DIG2-V
+ - DIG2-MC-V
+ - D-H-ESE-SOC
+
+Please contact the lecturer of your course when the course you attend is not mentioned here. 
+
 ## Disclaimer
 Project templates and materials for the VHDL ALU assignment in SOC class is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; Without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 

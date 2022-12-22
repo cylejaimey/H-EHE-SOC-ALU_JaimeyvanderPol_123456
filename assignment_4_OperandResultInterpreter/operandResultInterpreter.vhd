@@ -61,8 +61,7 @@
 --!
 --! HEX display 0 is primary controlled by the signed-operation signal. 
 --! in SIGNED operation it is switched on and in UNSIGNED operation off.
---! When the opcode ADB is executed HEX 0 will present a '1' when a carry occurs. 
---!
+--! 
 --! HEX display 1 present the hexadecimal numbers 0 to F.
 --!
 --! The dot-led is not used with the ALU and therefore always switched off.

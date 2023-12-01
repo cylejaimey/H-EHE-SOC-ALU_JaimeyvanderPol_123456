@@ -3,7 +3,7 @@
 --! \date      see top of 'Version History'
 --! \brief     Generate flags for ALU
 --! \author    Remko Welling (WLGRW) remko.welling@han.nl
---! \copyright HAN TF ELT/ESE Arnhem 
+--! \copyright HAN AEA-ESE Arnhem 
 --!
 --! Version History:
 --! ----------------
@@ -12,7 +12,8 @@
 --! -------|-----------|--------|-----------------------------------
 --! 001    |24-11-2020 |WLGRW   |Inital version
 --! 002    |25-11-2020 |WLGRW   |Adapted version for H-EHE-SOC class
---! 003    |7-4-2021 0 |WLGRW   |Corrected Zero flag handling 
+--! 003    |7-4-2021   |WLGRW   |Corrected Zero flag handling
+--! 004    |1-12-2023  |WLGRW   |Updated code with source by Xinyu Tian (student)
 --!
 --! Map named signals to flag register for output flagResult consists of 4 flags:
 --!  - Carry (C-flag)
@@ -42,7 +43,13 @@
 --!   1101 | OP_ROLA | ROL A, R:=ROL A, flag bits are not affected
 --!   1110 | OP_SHRA | SHR A, R:=SHR A, flag bits are not affected
 --!   1111 | OP_RORA | ROR A, R:=ROR A, flag bits are not affected
+--!
+--! \todo correct flag handler. 
+--! \todo add documentation: https://vhdlwhiz.com/how-to-check-if-a-vector-is-all-zeros-or-ones/
+--! \todo Decide on how to treat carry and overflow in this ALU. https://teaching.idallen.com/dat2343/10f/notes/040_overflow.txt
 
+--   Carry indicates the result isn't mathematically correct when interpreted as unsigned, 
+--   overflow indicates the result isn't mathematically correct when interpreted as signed.
 
 --  #########################################################################
 --  #########################################################################
@@ -66,7 +73,16 @@ ENTITY flagHandler is
       CARRY_FLAG:     INTEGER := 0; 
       SIGN_FLAG:      INTEGER := 1;
       OVER_FLOW_FLAG: INTEGER := 2;
-      ZERO_FLAG:      INTEGER := 3
+      ZERO_FLAG:      INTEGER := 3;
+      
+      CONSTANT OP_CLRR : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0000";
+      CONSTANT OP_INCA : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0001";
+      CONSTANT OP_DECA : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0010";
+      CONSTANT OP_ADD  : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0011";
+      CONSTANT OP_ADC  : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0100";
+      CONSTANT OP_ADB  : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0101";
+      CONSTANT OP_SBC  : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0111";
+      CONSTANT OP_SUB  : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0110"
    );
    
    PORT (
@@ -84,13 +100,16 @@ END ENTITY flagHandler;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation OF flagHandler IS
 
-   SIGNAL carryFlag,             --! carry flag
-          signFlag,              --! Sign flag
-          oVerflowFlag,          --! overflow flag
-          zeroFlag : STD_LOGIC;  --! zero flag
-          
+   SIGNAL carryFlag,                    --! carry flag
+          signFlag,                     --! Sign flag
+          oVerflowFlag,                 --! overflow flag
+          zeroFlag : STD_LOGIC := '0';  --! zero flag
+
+   SIGNAL oVerflowFlag_signed,
+          oVerflowFlag_unsigned : STD_LOGIC;
+
 BEGIN
-  
+
    flagResult(CARRY_FLAG)     <= carryFlag;
    flagResult(SIGN_FLAG)      <= signFlag;
    flagResult(OVER_FLOW_FLAG) <= oVerflowFlag;
@@ -99,23 +118,36 @@ BEGIN
 --! FLAG handling
    
    --! Transport carry from arithmetic result to carry flag.
-   carryFlag <= arithmeticresult(4) WHEN opcode(3)='0';
-
-   --!
-   oVerflowFlag <= '1' WHEN (opcode(3 DOWNTO 1) = "010" AND operandA(3)=operandB(3)     AND arithmeticresult(3)=NOT operandA(3)) OR   -- for ADD and ADC
-                            (opcode(3 DOWNTO 1) = "011" AND operandA(3)=NOT operandB(3) AND arithmeticresult(3)=NOT operandA(3)) ELSE -- for SUB and SBC
-                   '1' WHEN (opcode = "0101" AND SIGNED(arithmeticresult) > 9) OR (opcode = "0101" AND SIGNED(arithmeticresult) < -9) ELSE
-                   '0' WHEN  opcode(3 DOWNTO 2) = "01" ELSE
-                   oVerflowFlag;
+   carryFlag <= arithmeticresult(4) WHEN opcode(3)='0' ELSE  --! carry is MSB of the result (Not sure about this, should handly differently for signed and unsigned?)
+                flagStatus(CARRY_FLAG);                      --! when flags not influenced, copy the status from the input
 
    --! 
    signFlag <= signedOperation;
    
-   --! Z-flag looks only at content of c, independant of (un)signed:
-   zeroFlag <= '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "00000") ELSE -- Arthmic operation result is 0 and no carry
-               '1' WHEN (UNSIGNED(opcode) < "1000") AND (arithmeticresult = "10000") ELSE -- Arthmic operation result is 0 with carry
-               '0' WHEN (UNSIGNED(opcode) < "1000") ELSE
-               zeroFlag;
+   --!
+   oVerflowFlag_unsigned <= arithmeticresult(4);  --! For unsigned arithmetic operations, overflowFlag is the same of carryFlag
+                            
+   oVerflowFlag_signed <=  '1' WHEN (opcode = OP_INCA AND operandA(3) = '0' AND arithmeticresult(3)= '1') OR
+                                    (opcode = OP_DECA AND operandA(3) = '1' AND arithmeticresult(3)= '0')                                            ELSE --! for increment 7 and decriment -8 overflow
+                           '1' WHEN (opcode = OP_ADD OR opcode = OP_ADC) AND operandA(3) = operandB(3) AND arithmeticresult(3) = NOT operandA(3)     ELSE --! for ADD and ADC
+                           '1' WHEN (opcode = OP_SUB OR opcode = OP_SBC) AND operandA(3) = NOT operandB(3) AND arithmeticresult(3) = NOT operandA(3) ELSE --! for SUB and SBC
+                           '1' WHEN (opcode = OP_ADB AND arithmeticresult(4) = '1')                                                                  ELSE --! for ADB, only 4-bit unsigned number considered
+                           '0';                                                  
+   
+   --!
+   oVerflowFlag <=   oVerflowFlag_unsigned WHEN signedOperation = '0' AND opcode(3) = '0' ELSE  --! For unsigned arithmetic operation              
+                     oVerflowFlag_signed   WHEN signedOperation = '1' AND opcode(3) = '0' ELSE  --! For signed arithmetic operation
+                     flagStatus(OVER_FLOW_FLAG);                                                --! For logic operation, flags not influenced, copy the status from the input
+   
+   --!
+   zeroFlag <= '0' WHEN (opcode(3) = '1')                                      ELSE --! Switch off zeroFlag when using logic functions
+               '1' WHEN (opcode(3) = '0') AND (arithmeticresult = "00000")     ELSE --! Arthmic operation result is 0 and no carry
+               '1' WHEN (opcode(3) = '0') AND (arithmeticresult = "10000")     ELSE --! Arthmic operation result is 0 with carry
+               '0' WHEN (opcode(3) = '0')                                      ELSE
+               '1' WHEN (opcode(3 DOWNTO 2) = "10") AND (logicResult = "0000") ELSE --! Logic operation result is 0
+               '0' WHEN (opcode(3 DOWNTO 2) = "10")                            ELSE
+               flagStatus(ZERO_FLAG);                                               --! when flags not influenced, copy the status from the input
+               
 
 END ARCHITECTURE implementation;
 ------------------------------------------------------------------------------

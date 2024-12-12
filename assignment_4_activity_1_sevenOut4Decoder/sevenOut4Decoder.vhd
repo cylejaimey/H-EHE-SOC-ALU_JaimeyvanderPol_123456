@@ -110,26 +110,26 @@ entity sevenOut4Decoder is
    generic (
 	
 	
-	constant hex_off:    STD_LOGIC_VECTOR(0 to 7) := "11111111";
-	constant hex_minus:  STD_LOGIC_VECTOR(0 to 7) := "11111110";
-	constant hex_plus:   STD_LOGIC_VECTOR(0 to 7) := "10011101";
+	constant hex_off:    STD_LOGIC_VECTOR(0 to 6) := "1111111";
+	constant hex_minus:  STD_LOGIC_VECTOR(0 to 6) := "1111110";
+	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "1001101";
 	
-	constant hex_zero:   STD_LOGIC_VECTOR(0 to 7) := "00000011";
-	constant hex_one:    STD_LOGIC_VECTOR(0 to 7) := "10011111";
-	constant hex_two:    STD_LOGIC_VECTOR(0 to 7) := "00100101";
-	constant hex_three:  STD_LOGIC_VECTOR(0 to 7) := "00001101";
-	constant hex_four:   STD_LOGIC_VECTOR(0 to 7) := "10010101";
-	constant hex_five:   STD_LOGIC_VECTOR(0 to 7) := "01001001";
-	constant hex_six:    STD_LOGIC_VECTOR(0 to 7) := "01000000";
-	constant hex_seven:  STD_LOGIC_VECTOR(0 to 7) := "00011111";
-	constant hex_eight:  STD_LOGIC_VECTOR(0 to 7) := "00000001";
-	constant hex_nine:   STD_LOGIC_VECTOR(0 to 7) := "00011000";
-	constant hex_A:      STD_LOGIC_VECTOR(0 to 7) := "00010001";
-	constant hex_B:      STD_LOGIC_VECTOR(0 to 7) := "11000001";
-	constant hex_C:      STD_LOGIC_VECTOR(0 to 7) := "01100011";
-	constant hex_D:      STD_LOGIC_VECTOR(0 to 7) := "10000101";
-	constant hex_E:      STD_LOGIC_VECTOR(0 to 7) := "01100001";
-	constant hex_F:      STD_LOGIC_VECTOR(0 to 7) := "01110001";
+	constant hex_zero:   STD_LOGIC_VECTOR(0 to 6) := "0000001";
+	constant hex_one:    STD_LOGIC_VECTOR(0 to 6) := "1001111";
+	constant hex_two:    STD_LOGIC_VECTOR(0 to 6) := "0010010";
+	constant hex_three:  STD_LOGIC_VECTOR(0 to 6) := "0000110";
+	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "1001010";
+	constant hex_five:   STD_LOGIC_VECTOR(0 to 6) := "0100100";
+	constant hex_six:    STD_LOGIC_VECTOR(0 to 6) := "0100000";
+	constant hex_seven:  STD_LOGIC_VECTOR(0 to 6) := "0001111";
+	constant hex_eight:  STD_LOGIC_VECTOR(0 to 6) := "0000000";
+	constant hex_nine:   STD_LOGIC_VECTOR(0 to 6) := "0001100";
+	constant hex_A:      STD_LOGIC_VECTOR(0 to 6) := "0001000";
+	constant hex_B:      STD_LOGIC_VECTOR(0 to 6) := "1100000";
+	constant hex_C:      STD_LOGIC_VECTOR(0 to 6) := "0110001";
+	constant hex_D:      STD_LOGIC_VECTOR(0 to 6) := "1000010";
+	constant hex_E:      STD_LOGIC_VECTOR(0 to 6) := "0110000";
+	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "0111000";
 
 	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 3) := "0000";
 	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 3) := "0001";
@@ -154,7 +154,7 @@ entity sevenOut4Decoder is
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input
       dot     : IN  STD_LOGIC;                    --! Single line to control dot
       ctrl    : IN  STD_LOGIC;                    --! Control bit to access special functions
-      display : OUT STD_LOGIC_VECTOR(0 TO 7)      --! 7-signals to control leds in HEX-display
+      display : OUT STD_LOGIC_VECTOR(0 TO 6)     --! 7-signals to control leds in HEX-display
    );
    
 END ENTITY sevenOut4Decoder;
@@ -169,23 +169,24 @@ BEGIN
 
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
+with input SELECT
 
-display <= hex_zero  when input = b_hex_zero  else
-           hex_one   when input = b_hex_one   else
-           hex_two   when input = b_hex_two   else
-           hex_three when input = b_hex_three else
-           hex_four  when input = b_hex_four  else
-           hex_five  when input = b_hex_five  else
-           hex_six   when input = b_hex_six   else
-           hex_seven when input = b_hex_seven else
-           hex_eight when input = b_hex_eight else
-           hex_nine  when input = b_hex_nine  else
-           hex_A     when input = b_hex_A     else
-           hex_B     when input = b_hex_B     else
-           hex_C     when input = b_hex_C     else
-           hex_D     when input = b_hex_D     else
-           hex_E     when input = b_hex_E     else
-           hex_F     when input = b_hex_F;
+display <= hex_zero  when b_hex_zero, 
+           hex_one   when b_hex_one,  
+           hex_two   when b_hex_two,  
+           hex_three when b_hex_three,
+           hex_four  when b_hex_four, 
+           hex_five  when b_hex_five, 
+           hex_six   when b_hex_six,  
+           hex_seven when b_hex_seven,
+           hex_eight when b_hex_eight,
+           hex_nine  when b_hex_nine, 
+           hex_A     when b_hex_A,    
+           hex_B     when b_hex_B,    
+           hex_C     when b_hex_C,
+           hex_D     when b_hex_D,    
+           hex_E     when b_hex_E,    
+           hex_F     when b_hex_F;
 	
 
    -- Step 2: Implement here the multiplexer that will present the normal characters.

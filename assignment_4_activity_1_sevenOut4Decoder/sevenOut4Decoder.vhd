@@ -130,6 +130,24 @@ entity sevenOut4Decoder is
 	constant hex_D:      STD_LOGIC_VECTOR(0 to 6) := "10000101";
 	constant hex_E:      STD_LOGIC_VECTOR(0 to 6) := "01100001";
 	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "01110001";
+
+	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 3) := "0000";
+	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 3) := "0001";
+	constant b_hex_two:    STD_LOGIC_VECTOR(0 to 3) := "0010";
+	constant b_hex_three:  STD_LOGIC_VECTOR(0 to 3) := "0011";
+	constant b_hex_four:   STD_LOGIC_VECTOR(0 to 3) := "0100";
+	constant b_hex_five:   STD_LOGIC_VECTOR(0 to 3) := "0101";
+	constant b_hex_six:    STD_LOGIC_VECTOR(0 to 3) := "0110";
+	constant b_hex_seven:  STD_LOGIC_VECTOR(0 to 3) := "0111";
+	constant b_hex_eight:  STD_LOGIC_VECTOR(0 to 3) := "1000";
+	constant b_hex_nine:   STD_LOGIC_VECTOR(0 to 3) := "1001";
+	constant b_hex_A:      STD_LOGIC_VECTOR(0 to 3) := "1010";
+	constant b_hex_B:      STD_LOGIC_VECTOR(0 to 3) := "1011";
+	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 3) := "1100";
+	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 3) := "1101";
+	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 3) := "1110";
+	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111";
+	
 	)
    
    PORT (
@@ -151,6 +169,7 @@ BEGIN
 
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
+	
 
    -- Step 2: Implement here the multiplexer that will present the normal characters.
    

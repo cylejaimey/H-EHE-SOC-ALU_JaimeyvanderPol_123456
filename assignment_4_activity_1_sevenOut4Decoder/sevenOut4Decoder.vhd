@@ -110,26 +110,26 @@ entity sevenOut4Decoder is
    generic (
 	
 	
-	constant hex_off:    STD_LOGIC_VECTOR(0 to 6) := "11111111";
-	constant hex_minus:  STD_LOGIC_VECTOR(0 to 6) := "11111110";
-	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "10011101";
+	constant hex_off:    STD_LOGIC_VECTOR(0 to 7) := "11111111";
+	constant hex_minus:  STD_LOGIC_VECTOR(0 to 7) := "11111110";
+	constant hex_plus:   STD_LOGIC_VECTOR(0 to 7) := "10011101";
 	
-	constant hex_zero:   STD_LOGIC_VECTOR(0 to 6) := "00000011";
-	constant hex_one:    STD_LOGIC_VECTOR(0 to 6) := "10011111";
-	constant hex_two:    STD_LOGIC_VECTOR(0 to 6) := "00100101";
-	constant hex_three:  STD_LOGIC_VECTOR(0 to 6) := "00001101";
-	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "10010101";
-	constant hex_five:   STD_LOGIC_VECTOR(0 to 6) := "01001001";
-	constant hex_six:    STD_LOGIC_VECTOR(0 to 6) := "01000000";
-	constant hex_seven:  STD_LOGIC_VECTOR(0 to 6) := "00011111";
-	constant hex_eight:  STD_LOGIC_VECTOR(0 to 6) := "00000001";
-	constant hex_nine:   STD_LOGIC_VECTOR(0 to 6) := "00011000";
-	constant hex_A:      STD_LOGIC_VECTOR(0 to 6) := "00010001";
-	constant hex_B:      STD_LOGIC_VECTOR(0 to 6) := "11000001";
-	constant hex_C:      STD_LOGIC_VECTOR(0 to 6) := "01100011";
-	constant hex_D:      STD_LOGIC_VECTOR(0 to 6) := "10000101";
-	constant hex_E:      STD_LOGIC_VECTOR(0 to 6) := "01100001";
-	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "01110001";
+	constant hex_zero:   STD_LOGIC_VECTOR(0 to 7) := "00000011";
+	constant hex_one:    STD_LOGIC_VECTOR(0 to 7) := "10011111";
+	constant hex_two:    STD_LOGIC_VECTOR(0 to 7) := "00100101";
+	constant hex_three:  STD_LOGIC_VECTOR(0 to 7) := "00001101";
+	constant hex_four:   STD_LOGIC_VECTOR(0 to 7) := "10010101";
+	constant hex_five:   STD_LOGIC_VECTOR(0 to 7) := "01001001";
+	constant hex_six:    STD_LOGIC_VECTOR(0 to 7) := "01000000";
+	constant hex_seven:  STD_LOGIC_VECTOR(0 to 7) := "00011111";
+	constant hex_eight:  STD_LOGIC_VECTOR(0 to 7) := "00000001";
+	constant hex_nine:   STD_LOGIC_VECTOR(0 to 7) := "00011000";
+	constant hex_A:      STD_LOGIC_VECTOR(0 to 7) := "00010001";
+	constant hex_B:      STD_LOGIC_VECTOR(0 to 7) := "11000001";
+	constant hex_C:      STD_LOGIC_VECTOR(0 to 7) := "01100011";
+	constant hex_D:      STD_LOGIC_VECTOR(0 to 7) := "10000101";
+	constant hex_E:      STD_LOGIC_VECTOR(0 to 7) := "01100001";
+	constant hex_F:      STD_LOGIC_VECTOR(0 to 7) := "01110001";
 
 	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 3) := "0000";
 	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 3) := "0001";
@@ -146,9 +146,9 @@ entity sevenOut4Decoder is
 	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 3) := "1100";
 	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 3) := "1101";
 	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 3) := "1110";
-	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111";
+	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111"
 	
-	)
+	);
    
    PORT (
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input

@@ -105,46 +105,32 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 ------------------------------------------------------------------------------
-ENTITY sevenOut4Decoder is
--- Constants to enhance readability of the VHDL code:
+entity sevenOut4Decoder is
 
---   GENERIC ( -- REMOVE this comment when adding a CONSTANT
-
---! These constants are used to make the VHDL code more readable.
---! Beacuse we will create both numbers and alphanumeric characters in the 
---! display the caharacters are defined as CONSTANTS in the GENERIC part of the
---! entity. This will simplify maintaining the code because CONSTANTs can be 
---! defined once and reused many times.
---! 
---! The following constants are defined to generate alle required characters.
---! Each led in the HEX_display has been given a number for the purpose of 
---! identification. See figure 2.
---!
---! \verbatim
---!
---!  Figure 2: 7-segments lay-out:
---!  
---!        -0-
---!       |   |
---!       5   1
---!       |   |
---!        -6-
---!       |   |
---!       4   2
---!       |   |
---!        -3-  7 (dot)
---!  
---! \endverbatim
---!
---! All LEDs are grouped in a STD_LOGIC_VECTOR where the index number is
---! equal to the LED number. 
---!
---! Because the LEDs are contolled using inverted-logic we have to apply a
---! '1' to switch the LED off. 
-
-   -- Implement here CONSTANT
-
---   ); -- REMOVE this comment when adding a CONSTANT
+   generic (
+	
+	
+	constant hex_off:    STD_LOGIC_VECTOR(0 to 6) := "11111111";
+	constant hex_minus:  STD_LOGIC_VECTOR(0 to 6) := "11111110";
+	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "10011101";
+	
+	constant hex_zero:   STD_LOGIC_VECTOR(0 to 6) := "00000011";
+	constant hex_one:    STD_LOGIC_VECTOR(0 to 6) := "10011111";
+	constant hex_two:    STD_LOGIC_VECTOR(0 to 6) := "00100101";
+	constant hex_three:  STD_LOGIC_VECTOR(0 to 6) := "00001101";
+	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "10010101";
+	constant hex_five:   STD_LOGIC_VECTOR(0 to 6) := "01001001";
+	constant hex_six:    STD_LOGIC_VECTOR(0 to 6) := "01000000";
+	constant hex_seven:  STD_LOGIC_VECTOR(0 to 6) := "00011111";
+	constant hex_eight:  STD_LOGIC_VECTOR(0 to 6) := "00000001";
+	constant hex_nine:   STD_LOGIC_VECTOR(0 to 6) := "00011000";
+	constant hex_A:      STD_LOGIC_VECTOR(0 to 6) := "00010001";
+	constant hex_B:      STD_LOGIC_VECTOR(0 to 6) := "11000001";
+	constant hex_C:      STD_LOGIC_VECTOR(0 to 6) := "01100011";
+	constant hex_D:      STD_LOGIC_VECTOR(0 to 6) := "10000101";
+	constant hex_E:      STD_LOGIC_VECTOR(0 to 6) := "01100001";
+	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "01110001";
+	)
    
    PORT (
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input

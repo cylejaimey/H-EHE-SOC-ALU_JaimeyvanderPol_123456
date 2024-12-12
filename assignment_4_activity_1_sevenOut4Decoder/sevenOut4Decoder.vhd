@@ -154,7 +154,7 @@ entity sevenOut4Decoder is
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input
       dot     : IN  STD_LOGIC;                    --! Single line to control dot
       ctrl    : IN  STD_LOGIC;                    --! Control bit to access special functions
-      display : OUT STD_LOGIC_VECTOR(0 TO 6)     --! 7-signals to control leds in HEX-display
+      display : OUT STD_LOGIC_VECTOR(0 TO 7)  --! 7-signals to control leds in HEX-display
    );
    
 END ENTITY sevenOut4Decoder;
@@ -166,12 +166,11 @@ ARCHITECTURE implementation OF sevenOut4Decoder IS
 BEGIN
 
    -- Step 1: Connect port "dot" to the dot-segment in the HEX display.
-
+display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
-with input SELECT
-
-display <= hex_zero  when b_hex_zero, 
+with input select
+display(0 to 6) <= hex_zero  when b_hex_zero, 
            hex_one   when b_hex_one,  
            hex_two   when b_hex_two,  
            hex_three when b_hex_three,

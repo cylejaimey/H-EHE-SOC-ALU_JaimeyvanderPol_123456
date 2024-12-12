@@ -169,6 +169,23 @@ BEGIN
 
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
+
+display <= hex_zero  when input = b_hex_zero  else
+           hex_one   when input = b_hex_one   else
+           hex_two   when input = b_hex_two   else
+           hex_three when input = b_hex_three else
+           hex_four  when input = b_hex_four  else
+           hex_five  when input = b_hex_five  else
+           hex_six   when input = b_hex_six   else
+           hex_seven when input = b_hex_seven else
+           hex_eight when input = b_hex_eight else
+           hex_nine  when input = b_hex_nine  else
+           hex_A     when input = b_hex_A     else
+           hex_B     when input = b_hex_B     else
+           hex_C     when input = b_hex_C     else
+           hex_D     when input = b_hex_D     else
+           hex_E     when input = b_hex_E     else
+           hex_F     when input = b_hex_F;
 	
 
    -- Step 2: Implement here the multiplexer that will present the normal characters.

@@ -160,6 +160,7 @@ END ENTITY nBitBuffer;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation0 OF nBitBuffer IS
 BEGIN
+output(0) <= input(0);
 
 --! Assignment-A: Implement here the concurrent VHDL code for the n-bit Buffer.
 

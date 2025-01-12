@@ -118,7 +118,7 @@ entity sevenOut4Decoder is
 	constant hex_one:    STD_LOGIC_VECTOR(0 to 6) := "1001111";
 	constant hex_two:    STD_LOGIC_VECTOR(0 to 6) := "0010010";
 	constant hex_three:  STD_LOGIC_VECTOR(0 to 6) := "0000110";
-	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "1000110";
+	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "1001010";
 	constant hex_five:   STD_LOGIC_VECTOR(0 to 6) := "0100100";
 	constant hex_six:    STD_LOGIC_VECTOR(0 to 6) := "0100000";
 	constant hex_seven:  STD_LOGIC_VECTOR(0 to 6) := "0001111";
@@ -154,7 +154,7 @@ entity sevenOut4Decoder is
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input
       dot     : IN  STD_LOGIC;                    --! Single line to control dot
       ctrl    : IN  STD_LOGIC;                    --! Control bit to access special functions
-      display : OUT STD_LOGIC_VECTOR(0 TO 6)  --! 7-signals to control leds in HEX-display
+      display : OUT STD_LOGIC_VECTOR(0 TO 7)  --! 7-signals to control leds in HEX-display
    );
    
 END ENTITY sevenOut4Decoder;
@@ -166,7 +166,7 @@ ARCHITECTURE implementation OF sevenOut4Decoder IS
 BEGIN
 
    -- Step 1: Connect port "dot" to the dot-segment in the HEX display.
---!display(7) <= NOT dot;
+display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
 with input select

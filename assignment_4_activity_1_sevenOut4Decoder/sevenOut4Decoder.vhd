@@ -130,23 +130,29 @@ entity sevenOut4Decoder is
 	constant hex_D:      STD_LOGIC_VECTOR(0 to 6) := "1000010";
 	constant hex_E:      STD_LOGIC_VECTOR(0 to 6) := "0110000";
 	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "0111000";
+	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "1001110";
+	constant hex_min:    STD_LOGIC_VECTOR(0 to 6) := "1111110";
+	constant hex_ctrl:   STD_LOGIC_VECTOR(0 to 6) := "1001110";	
 
-	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 3) := "0000";
-	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 3) := "0001";
-	constant b_hex_two:    STD_LOGIC_VECTOR(0 to 3) := "0010";
-	constant b_hex_three:  STD_LOGIC_VECTOR(0 to 3) := "0011";
-	constant b_hex_four:   STD_LOGIC_VECTOR(0 to 3) := "0100";
-	constant b_hex_five:   STD_LOGIC_VECTOR(0 to 3) := "0101";
-	constant b_hex_six:    STD_LOGIC_VECTOR(0 to 3) := "0110";
-	constant b_hex_seven:  STD_LOGIC_VECTOR(0 to 3) := "0111";
-	constant b_hex_eight:  STD_LOGIC_VECTOR(0 to 3) := "1000";
-	constant b_hex_nine:   STD_LOGIC_VECTOR(0 to 3) := "1001";
-	constant b_hex_A:      STD_LOGIC_VECTOR(0 to 3) := "1010";
-	constant b_hex_B:      STD_LOGIC_VECTOR(0 to 3) := "1011";
-	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 3) := "1100";
-	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 3) := "1101";
-	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 3) := "1110";
-	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111"
+	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 4) := "00000";
+	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 4) := "00001";
+	constant b_hex_two:    STD_LOGIC_VECTOR(0 to 4) := "00010";
+	constant b_hex_three:  STD_LOGIC_VECTOR(0 to 4) := "00011";
+	constant b_hex_four:   STD_LOGIC_VECTOR(0 to 4) := "00100";
+	constant b_hex_five:   STD_LOGIC_VECTOR(0 to 4) := "00101";
+	constant b_hex_six:    STD_LOGIC_VECTOR(0 to 4) := "00110";
+	constant b_hex_seven:  STD_LOGIC_VECTOR(0 to 4) := "00111";
+	constant b_hex_eight:  STD_LOGIC_VECTOR(0 to 4) := "01000";
+	constant b_hex_nine:   STD_LOGIC_VECTOR(0 to 4) := "01001";
+	constant b_hex_A:      STD_LOGIC_VECTOR(0 to 4) := "01010";
+	constant b_hex_B:      STD_LOGIC_VECTOR(0 to 4) := "01011";
+	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 4) := "01100";
+	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 4) := "01101";
+	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 4) := "01110";
+	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 4) := "01111";
+	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 4) := "01101";
+	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 4) := "01110";
+	constant b_hex_ctrl:   STD_LOGIC_VECTOR(0 to 4) := "01111"
 	
 	);
    
@@ -162,6 +168,7 @@ END ENTITY sevenOut4Decoder;
 ARCHITECTURE implementation OF sevenOut4Decoder IS
    
    -- add here signals to your descretion
+	SIGNAL controlAndInput : STD_LOGIC_VECTOR(0 to 4);
    
 BEGIN
 
@@ -169,7 +176,8 @@ BEGIN
 display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
-with input select
+controlAndInput <= ctrl & input;
+with controlAndInput select
 display(0 to 6) <= 
            hex_zero  when b_hex_zero, 
            hex_one   when b_hex_one,  
@@ -187,7 +195,9 @@ display(0 to 6) <=
            hex_D     when b_hex_D,    
            hex_E     when b_hex_E,    
            hex_F     when b_hex_F;
-
+           hex_plus  when b_hex_plus,
+			  hex_min   when b_hex_min,
+			  hex_ctrl  when b_hex_ctrl.
 	
 
    -- Step 2: Implement here the multiplexer that will present the normal characters.

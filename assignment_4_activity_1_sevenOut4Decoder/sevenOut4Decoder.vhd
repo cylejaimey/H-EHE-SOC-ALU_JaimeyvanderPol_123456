@@ -111,14 +111,13 @@ entity sevenOut4Decoder is
 	
 	
 	constant hex_off:    STD_LOGIC_VECTOR(0 to 6) := "1111111";
-	constant hex_minus:  STD_LOGIC_VECTOR(0 to 6) := "1111110";
-	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "1001101";
+	
 	
 	constant hex_zero:   STD_LOGIC_VECTOR(0 to 6) := "0000001";
 	constant hex_one:    STD_LOGIC_VECTOR(0 to 6) := "1001111";
 	constant hex_two:    STD_LOGIC_VECTOR(0 to 6) := "0010010";
 	constant hex_three:  STD_LOGIC_VECTOR(0 to 6) := "0000110";
-	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "1001010";
+	constant hex_four:   STD_LOGIC_VECTOR(0 to 6) := "1001100";
 	constant hex_five:   STD_LOGIC_VECTOR(0 to 6) := "0100100";
 	constant hex_six:    STD_LOGIC_VECTOR(0 to 6) := "0100000";
 	constant hex_seven:  STD_LOGIC_VECTOR(0 to 6) := "0001111";
@@ -150,14 +149,14 @@ entity sevenOut4Decoder is
 	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 4) := "01101";
 	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 4) := "01110";
 	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 4) := "01111";
-	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 4) := "01101";
-	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 4) := "01110";
-	constant b_hex_ctrl:   STD_LOGIC_VECTOR(0 to 4) := "01111"
+	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 4) := "10001";
+	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 4) := "10010";
+	constant b_hex_ctrl:   STD_LOGIC_VECTOR(0 to 4) := "10011"
 	
 	);
    
    PORT (
-      input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input
+      input   : IN  STD_LOGIC_VECTOR(4 DOWNTO 0); --! 4-bit binary input
       dot     : IN  STD_LOGIC;                    --! Single line to control dot
       ctrl    : IN  STD_LOGIC;                    --! Control bit to access special functions
       display : OUT STD_LOGIC_VECTOR(0 TO 7)  --! 7-signals to control leds in HEX-display
@@ -168,7 +167,7 @@ END ENTITY sevenOut4Decoder;
 ARCHITECTURE implementation OF sevenOut4Decoder IS
    
    -- add here signals to your descretion
-	SIGNAL controlAndInput : STD_LOGIC_VECTOR(0 to 4);
+
    
 BEGIN
 
@@ -176,8 +175,8 @@ BEGIN
 display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
-controlAndInput <= ctrl & input;
-with controlAndInput select
+
+with input select
 display(0 to 6) <= 
            hex_zero  when b_hex_zero, 
            hex_one   when b_hex_one,  
@@ -194,10 +193,11 @@ display(0 to 6) <=
            hex_C     when b_hex_C,
            hex_D     when b_hex_D,    
            hex_E     when b_hex_E,    
-           hex_F     when b_hex_F;
+           hex_F     when b_hex_F,
            hex_plus  when b_hex_plus,
 			  hex_min   when b_hex_min,
-			  hex_ctrl  when b_hex_ctrl.
+			  hex_ctrl  when b_hex_ctrl,
+			  hex_off   when OTHERS;
 	
 
    -- Step 2: Implement here the multiplexer that will present the normal characters.

@@ -54,6 +54,7 @@
 --!h
 --! \endverbatim
 --!
+
 --! Design:
 --! -------
 --! Figure 2 presents the input-output diagram of the 7 out of 4 decoder.
@@ -131,35 +132,36 @@ entity sevenOut4Decoder is
 	constant hex_F:      STD_LOGIC_VECTOR(0 to 6) := "0111000";
 	constant hex_plus:   STD_LOGIC_VECTOR(0 to 6) := "1001110";
 	constant hex_min:    STD_LOGIC_VECTOR(0 to 6) := "1111110";
-	constant hex_ctrl:   STD_LOGIC_VECTOR(0 to 6) := "1001110";	
+	
 
-	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 4) := "00000";
-	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 4) := "00001";
-	constant b_hex_two:    STD_LOGIC_VECTOR(0 to 4) := "00010";
-	constant b_hex_three:  STD_LOGIC_VECTOR(0 to 4) := "00011";
-	constant b_hex_four:   STD_LOGIC_VECTOR(0 to 4) := "00100";
-	constant b_hex_five:   STD_LOGIC_VECTOR(0 to 4) := "00101";
-	constant b_hex_six:    STD_LOGIC_VECTOR(0 to 4) := "00110";
-	constant b_hex_seven:  STD_LOGIC_VECTOR(0 to 4) := "00111";
-	constant b_hex_eight:  STD_LOGIC_VECTOR(0 to 4) := "01000";
-	constant b_hex_nine:   STD_LOGIC_VECTOR(0 to 4) := "01001";
-	constant b_hex_A:      STD_LOGIC_VECTOR(0 to 4) := "01010";
-	constant b_hex_B:      STD_LOGIC_VECTOR(0 to 4) := "01011";
-	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 4) := "01100";
-	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 4) := "01101";
-	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 4) := "01110";
-	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 4) := "01111";
-	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 4) := "10001";
-	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 4) := "10010";
-	constant b_hex_ctrl:   STD_LOGIC_VECTOR(0 to 4) := "10011"
+	constant b_hex_zero:   STD_LOGIC_VECTOR(0 to 3) := "0000";
+	constant b_hex_one:    STD_LOGIC_VECTOR(0 to 3) := "0001";
+	constant b_hex_two:    STD_LOGIC_VECTOR(0 to 3) := "0010";
+	constant b_hex_three:  STD_LOGIC_VECTOR(0 to 3) := "0011";
+	constant b_hex_four:   STD_LOGIC_VECTOR(0 to 3) := "0100";
+	constant b_hex_five:   STD_LOGIC_VECTOR(0 to 3) := "0101";
+	constant b_hex_six:    STD_LOGIC_VECTOR(0 to 3) := "0110";
+	constant b_hex_seven:  STD_LOGIC_VECTOR(0 to 3) := "0111";
+	constant b_hex_eight:  STD_LOGIC_VECTOR(0 to 3) := "1000";
+	constant b_hex_nine:   STD_LOGIC_VECTOR(0 to 3) := "1001";
+	constant b_hex_A:      STD_LOGIC_VECTOR(0 to 3) := "1010";
+	constant b_hex_B:      STD_LOGIC_VECTOR(0 to 3) := "1011";
+	constant b_hex_C:      STD_LOGIC_VECTOR(0 to 3) := "1100";
+	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 3) := "1101";
+	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 3) := "1110";
+	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111";
+	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 3) := "0000";
+	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 3) := "0001"
 	
 	);
    
    PORT (
-      input   : IN  STD_LOGIC_VECTOR(4 DOWNTO 0); --! 4-bit binary input
+      input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0); --! 4-bit binary input
       dot     : IN  STD_LOGIC;                    --! Single line to control dot
       ctrl    : IN  STD_LOGIC;                    --! Control bit to access special functions
-      display : OUT STD_LOGIC_VECTOR(0 TO 7)  --! 7-signals to control leds in HEX-display
+      display : OUT STD_LOGIC_VECTOR(0 TO 7);  --! 7-signals to control leds in HEX-display
+		normal  : INOUT STD_LOGIC_VECTOR(0 TO 6);
+		extended: INOUT STD_LOGIC_VECTOR(0 TO 6)
    );
    
 END ENTITY sevenOut4Decoder;
@@ -175,9 +177,9 @@ BEGIN
 display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
-
+   -- Step 2: Implement here the multiplexer that will present the normal characters.
 with input select
-display(0 to 6) <= 
+      normal(0 to 6) <= 
            hex_zero  when b_hex_zero, 
            hex_one   when b_hex_one,  
            hex_two   when b_hex_two,  
@@ -194,19 +196,19 @@ display(0 to 6) <=
            hex_D     when b_hex_D,    
            hex_E     when b_hex_E,    
            hex_F     when b_hex_F,
-           hex_plus  when b_hex_plus,
-			  hex_min   when b_hex_min,
-			  hex_ctrl  when b_hex_ctrl,
 			  hex_off   when OTHERS;
 	
-
-   -- Step 2: Implement here the multiplexer that will present the normal characters.
    
    -- Step 3: Implement here the multiplexter that will the extended characters.
-
+	WITH input SELECT
+		extended(0 To 6) <=	hex_plus WHEN b_hex_plus,
+								   hex_min WHEN b_hex_min,
+								   "0000000" WHEN OTHERS;
    -- Step 4: Implement here the  selector of the normal characters and the 
    -- extended characters using the ctrl signal.
-
+	WITH ctrl SELECT
+		display(0 TO 6)  <=	normal WHEN '0',
+									extended WHEN '1';
 
 END ARCHITECTURE implementation;
 ------------------------------------------------------------------------------

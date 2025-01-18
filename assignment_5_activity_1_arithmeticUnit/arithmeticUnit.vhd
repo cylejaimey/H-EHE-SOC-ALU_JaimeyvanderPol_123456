@@ -81,7 +81,14 @@ ENTITY arithmeticUnit is
       N: INTEGER := 4  --! logic unit is designed for 4-bits
       
       --! Implement here CONSTANTS as GENERIC when required.
-      
+     CONSTANT OP_CLRR: STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
+	  CONSTANT OP_INCA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
+	  CONSTANT OP_DECA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "010";
+	  CONSTANT  OP_ADD: STD_LOGIC_VECTOR (2   DOWNTO 0) := "011";
+	  CONSTANT  OP_ADC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "100";
+	  CONSTANT  OP_ADB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "101";
+	  CONSTANT  OP_SUB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "110";
+	  CONSTANT  OP_SBC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "111"
    );
    
    PORT (

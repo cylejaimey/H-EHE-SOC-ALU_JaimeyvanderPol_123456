@@ -74,12 +74,13 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC
 USE ieee.numeric_std.all;     --! SIGNED
+USE ieee.std_logic_unsigned.all;
 ------------------------------------------------------------------------------
 ENTITY arithmeticUnit is
 
    GENERIC (
-      N: INTEGER := 4  --! logic unit is designed for 4-bits
-      
+      N: INTEGER := 4;  --! logic unit is designed for 4-bits
+			
       --! Implement here CONSTANTS as GENERIC when required.
      CONSTANT OP_CLRR: STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
 	  CONSTANT OP_INCA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
@@ -96,7 +97,8 @@ ENTITY arithmeticUnit is
       B : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0); --! n-bit binary input
       P : IN  STD_LOGIC_VECTOR (3   DOWNTO 0); --! Flags input P(0)=Carry-bit
       F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0); --! 3-bit opcode
-      R : OUT STD_LOGIC_VECTOR (N   DOWNTO 0)  --! n+1-bit binary output
+      R : OUT STD_LOGIC_VECTOR (3   DOWNTO 0);  --! n+1-bit binary output
+		T : IN  STD_LOGIC_VECTOR (3   DOWNTO 0) --! Flags input P(0)=Carry-bit
    );
    
 END ENTITY arithmeticUnit;
@@ -104,9 +106,22 @@ END ENTITY arithmeticUnit;
 ARCHITECTURE implementation OF arithmeticUnit IS
    
    -- Implement here the SIGNALS to your descretion
-   
+    
 BEGIN
-
-   -- Implement here your arithmetic unit.
+PROCESS (A,B,F)
+ BEGIN
+ CASE F IS
+ WHEN OP_CLRR =>R<=T;
+ WHEN OP_INCA =>R<=A + 1;
+ WHEN OP_DECA =>R<=A - 1;
+ WHEN OP_ADD  =>R<=A + B;
+ WHEN OP_ADC  =>R<=A + B;--!moet nog c bij
+ WHEN OP_ADB  =>R<=A + B;--!moet nog c bij
+ WHEN OP_SUB  =>R<=A - B;
+ WHEN OP_SBC  =>R<=A - B;--!moet nog c bij
+ WHEN OTHERS  => NULL;
+END CASE;
+END PROCESS;
+	    
 
 END ARCHITECTURE implementation;

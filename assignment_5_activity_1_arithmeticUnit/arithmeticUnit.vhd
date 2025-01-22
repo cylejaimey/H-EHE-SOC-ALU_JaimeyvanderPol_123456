@@ -108,20 +108,11 @@ ARCHITECTURE implementation OF arithmeticUnit IS
    -- Implement here the SIGNALS to your descretion
     
 BEGIN
-PROCESS (A,B,F)
- BEGIN
- CASE F IS
- WHEN OP_CLRR =>R<=T;
- WHEN OP_INCA =>R<=A + 1;
- WHEN OP_DECA =>R<=A - 1;
- WHEN OP_ADD  =>R<=A + B;
- WHEN OP_ADC  =>R<=A + B;--!moet nog c bij
- WHEN OP_ADB  =>R<=A + B;--!moet nog c bij
- WHEN OP_SUB  =>R<=A - B;
- WHEN OP_SBC  =>R<=A - B;--!moet nog c bij
- WHEN OTHERS  => NULL;
-END CASE;
-END PROCESS;
+WITH F SELECT
+  R(3 DOWNTO 0) <=
+ A + B WHEN OP_ADD,
+ A - B WHEN OP_SUB,
+ NULL  WHEN OTHERS;
 	    
 
 END ARCHITECTURE implementation;

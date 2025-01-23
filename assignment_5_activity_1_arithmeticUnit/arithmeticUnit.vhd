@@ -108,10 +108,18 @@ ARCHITECTURE implementation OF arithmeticUnit IS
    -- Implement here the SIGNALS to your descretion
     
 BEGIN
+
+
 WITH F SELECT
   R(3 DOWNTO 0) <=
+"0000" WHEN OP_CLRR,
+ A + 1 WHEN OP_INCA,
+ A - 1 WHEN OP_DECA,
  A + B WHEN OP_ADD,
+ A + B + T(0) WHEN OP_ADC,
+ A + B + T(0) WHEN OP_ADB,
  A - B WHEN OP_SUB,
+ A - B - T(0) WHEN OP_SBC,
  NULL  WHEN OTHERS;
 	    
 

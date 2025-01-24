@@ -99,6 +99,7 @@ ENTITY arithmeticUnit is
       F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0); --! 3-bit opcode
       R : OUT STD_LOGIC_VECTOR (3   DOWNTO 0);  --! n+1-bit binary output
 		T : IN  STD_LOGIC_VECTOR (3   DOWNTO 0) --! Flags input P(0)=Carry-bit
+		
    );
    
 END ENTITY arithmeticUnit;
@@ -108,6 +109,7 @@ ARCHITECTURE implementation OF arithmeticUnit IS
    -- Implement here the SIGNALS to your descretion
     
 BEGIN
+
 
 
 WITH F SELECT

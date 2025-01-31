@@ -75,6 +75,14 @@ ENTITY logicUnit is
       N: INTEGER := 4  --! logic unit is designed for 4-bits
       
       --! Implement here CONSTANTS as GENERIC when required.
+	  CONSTANT OP_AND:  STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
+	  CONSTANT OP_OR:   STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
+	  CONSTANT OP_XOR:  STD_LOGIC_VECTOR (2   DOWNTO 0) := "010";
+	  CONSTANT OP_NOTA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "011";
+	  CONSTANT OP_SHLA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "100";
+	  CONSTANT OP_ROLA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "101";
+	  CONSTANT OP_SHRA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "110";
+	  CONSTANT OP_RORA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "111"
       
    );
    
@@ -92,5 +100,16 @@ BEGIN
 
    --! Implement here the logic-unit that executes the operations as presented
    --! in table 1.
-
+WITH F SELECT
+ R(3 DOWNTO 0) <=
+ A AND B      WHEN OP_AND,
+ A OR B   WHEN OP_OR,
+ A XOR B   WHEN OP_XOR,
+ NOT A   WHEN OP_NOTA,
+ SHL A  WHEN OP_SHLA,
+ A + B + P(0) WHEN OP_ROLA,
+ A - B WHEN OP_SHRA,
+ A - B - P(0) WHEN OP_RORA,
+ NULL  WHEN OTHERS;
+ 
 END ARCHITECTURE implementation;

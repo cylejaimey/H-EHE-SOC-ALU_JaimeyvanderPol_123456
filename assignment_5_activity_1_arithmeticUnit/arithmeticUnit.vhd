@@ -7,9 +7,9 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! -Student 1 name         : 
---! -Student 1 studentnumber: 
---! -Student 1 email address: 
+--! -Student 1 name         : Jaimey van der Pol
+--! -Student 1 studentnumber: 2149797
+--! -Student 1 email address: jaimeyvanderpol@gmail.com 
 --! 
 --! -Student 2 name         : 
 --! -Student 2 studentnumber: 
@@ -97,13 +97,11 @@ ENTITY arithmeticUnit is
       B : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0); --! n-bit binary input
       P : IN  STD_LOGIC_VECTOR (3   DOWNTO 0); --! Flags input P(0)=Carry-bit
       F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0); --! 3-bit opcode
-      R : OUT STD_LOGIC_VECTOR (3   DOWNTO 0);  --! n+1-bit binary output
-		T : IN  STD_LOGIC_VECTOR (3   DOWNTO 0) --! Flags input P(0)=Carry-bit
-		
+      R : OUT STD_LOGIC_VECTOR (3   DOWNTO 0)  --! n+1-bit binary output
    );
    
 END ENTITY arithmeticUnit;
-------------------------------------------------------------------------------
+-------------------------------------------------------- ============================================================================================================================================================================================================================================----------------------
 ARCHITECTURE implementation OF arithmeticUnit IS
    
    -- Implement here the SIGNALS to your descretion
@@ -118,10 +116,10 @@ WITH F SELECT
  A + 1 WHEN OP_INCA,
  A - 1 WHEN OP_DECA,
  A + B WHEN OP_ADD,
- A + B + T(0) WHEN OP_ADC,
- A + B + T(0) WHEN OP_ADB,
+ A + B + P(0) WHEN OP_ADC,
+ A + B + P(0) WHEN OP_ADB,
  A - B WHEN OP_SUB,
- A - B - T(0) WHEN OP_SBC,
+ A - B - P(0) WHEN OP_SBC,
  NULL  WHEN OTHERS;
 	    
 

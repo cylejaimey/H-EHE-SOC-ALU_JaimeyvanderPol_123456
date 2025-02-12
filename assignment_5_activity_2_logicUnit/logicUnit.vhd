@@ -72,7 +72,7 @@ USE ieee.numeric_std.all;
 ENTITY logicUnit is
 
    GENERIC (
-      N: INTEGER := 4  --! logic unit is designed for 4-bits
+      N: INTEGER := 4;  --! logic unit is designed for 4-bits
       
       --! Implement here CONSTANTS as GENERIC when required.
 	  CONSTANT OP_AND:  STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
@@ -102,14 +102,14 @@ BEGIN
    --! in table 1.
 WITH F SELECT
  R(3 DOWNTO 0) <=
- A AND B      WHEN OP_AND,
- A OR B   WHEN OP_OR,
- A XOR B   WHEN OP_XOR,
+ A AND B WHEN OP_AND,
+ A OR B  WHEN OP_OR,
+ A XOR B WHEN OP_XOR,
  NOT A   WHEN OP_NOTA,
- SHL A  WHEN OP_SHLA,
- A + B + P(0) WHEN OP_ROLA,
- A - B WHEN OP_SHRA,
- A - B - P(0) WHEN OP_RORA,
- NULL  WHEN OTHERS;
+ A(N-2 DOWNTO 0) & '0' WHEN OP_SHLA,
+ A(n-2 downto 0) & A(N-1)  WHEN OP_ROLA,
+ '0' & A(N-1 DOWNTO 1)  WHEN OP_SHRA,
+ A(0) & A(N-1 DOWNTO 1)   WHEN OP_RORA,
+ NULL    WHEN OTHERS;
  
 END ARCHITECTURE implementation;

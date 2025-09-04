@@ -143,8 +143,6 @@ set_location_assignment PIN_E14 -to LEDR[6]
 set_location_assignment PIN_D14 -to LEDR[7]
 set_location_assignment PIN_A11 -to LEDR[8]
 set_location_assignment PIN_B11 -to LEDR[9]
-set_location_assignment PIN_B12 -to SW[5]
-set_location_assignment PIN_A13 -to SW[6]
 set_location_assignment PIN_A14 -to SW[7]
 set_location_assignment PIN_B14 -to SW[8]
 set_location_assignment PIN_F15 -to SW[9]
@@ -207,7 +205,6 @@ set_location_assignment PIN_AA9 -to MIPI_PIXEL_HS
 set_location_assignment PIN_AB10 -to MIPI_PIXEL_VS
 set_location_assignment PIN_AB11 -to MIPI_REFCLK
 set_location_assignment PIN_AA8 -to MIPI_RESET_n
-set_location_assignment PIN_C14 -to display[0] -comment HEX0[0]
 set_location_assignment PIN_E15 -to display[1] -comment HEX0[1]
 set_location_assignment PIN_C15 -to display[2] -comment HEX0[2]
 set_location_assignment PIN_C16 -to display[3] -comment HEX0[3]
@@ -222,5 +219,7 @@ set_location_assignment PIN_C12 -to input[3] -comment SW[3]
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_location_assignment PIN_A12 -to ctrl[0] -comment SW[4]
+set_location_assignment PIN_A12 -to ctrl -comment SW[4]
+set_location_assignment PIN_A13 -to dot -comment SW[6]
+set_location_assignment PIN_C14 -to HEX0[0] -comment HEX0[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

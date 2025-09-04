@@ -201,8 +201,8 @@ with input select
    
    -- Step 3: Implement here the multiplexter that will the extended characters.
 	WITH input SELECT
-		extended(0 To 6) <=	hex_plus WHEN b_hex_plus,
-								   hex_min WHEN b_hex_min,
+		extended(0 To 6) <=	hex_plus  WHEN b_hex_plus,
+								   hex_min   WHEN b_hex_min,
 								   "0000000" WHEN OTHERS;
    -- Step 4: Implement here the  selector of the normal characters and the 
    -- extended characters using the ctrl signal.

@@ -160,16 +160,21 @@ END ENTITY nBitBuffer;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation0 OF nBitBuffer IS
 BEGIN
-output(0) <= input(0);
+
 
 --! Assignment-A: Implement here the concurrent VHDL code for the n-bit Buffer.
 
 END ARCHITECTURE implementation0;
 ------------------------------------------------------------------------------
---ARCHITECTURE implementation1 OF nBitBuffer IS
---BEGIN
+ARCHITECTURE implementation1 OF nBitBuffer IS
+BEGIN
 --
-----! Assignment-B: Implement here the sequential VHDL code for the n-bit Buffer
---
---END ARCHITECTURE implementation1;
+    PROCESS(clk)
+    BEGIN
+        IF rising_edge(clk) THEN
+            output <= input; -- Assign input to output on the rising edge of the clock
+        END IF;
+    END PROCESS;
+	 
+END ARCHITECTURE implementation1;
 ------------------------------------------------------------------------------

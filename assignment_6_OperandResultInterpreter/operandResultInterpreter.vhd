@@ -150,14 +150,14 @@ BEGIN
 
    -- Implement here your logic.
 	
- dotSignal0 <= '0';
+ dotSignal0 <=  '0';
  dotSignal1  <= '0';
  
  control0   <= '1'; -- linker display altijd extended characters 
  control1   <= '0'; -- rechter display altijd standaard characters
  
 -- linker display 
-hexSignal0 <= "1111" WHEN signed_operation='0'                           ELSE
+hexSignal0 <= "1111" WHEN signed_operation = '0'                         ELSE
               "0010" WHEN result(3) = '1' AND signed_operation = '1'     ELSE
               "0001" WHEN result(3) = '0' AND signed_operation = '1';
 --rechter display 

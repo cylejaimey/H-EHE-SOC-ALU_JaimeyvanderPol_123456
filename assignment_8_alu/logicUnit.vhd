@@ -1,11 +1,69 @@
-------------------------------------------------------------------------------
+--------------------------------------------------------------------
 --! \file      logicUnit.vhd
 --! \date      see top of 'Version History'
 --! \brief     n-bit logic unit
 --! \author    Remko Welling (WLGRW) remko.welling@han.nl
 --! \copyright HAN TF ELT/ESE Arnhem 
 --!
---! \todo Students shall replace this file for the result of assignment 3
+--! \todo Students that submit this code have to complete their details:
+--!
+--! -Student 1 name         : Merlijn Vruggink
+--! -Student 1 studentnumber: 2151024
+--! -Student 1 email address: m.vruggink@student.han.nl
+--! 
+--! -Student 2 name         : Christian Versluis
+--! -Student 2 studentnumber: 2147197
+--! -Student 2 email address: cvm@student.han.nl
+--!
+--!
+--! Version History:
+--! ----------------
+--!
+--! Nr:    |Date:      |Author: |Remarks:
+--! -------|-----------|--------|-----------------------------------
+--! 001    |18-10-2019 |WLGRW   |Inital version
+--! 002    |9-1-2020   |WLGRW   |Added use of shift functions
+--! 003    |24-11-2020 |WLGRW   |Modifed for use in SOC-class January 2021
+--! 004    |9-12-2020  |WLGRW   |Modifications for assignment
+--! 
+--! \todo Add revsion history when executing these assignments.
+--!
+--! Design:
+--! -------
+--! Figure 1 presents the input-output diagram of the logic unit.
+--! Depending on the opcode the logic unit will apply the operation
+--! as specified in table 1.
+--! 
+--! \verbatim
+--!
+--!  Figure 1: Input-output diagram of the logic unit.
+--! 
+--!                  +---------+
+--!              n   |         |
+--! operand A ---/---|         |
+--!              n   |  logic  |   4
+--! operand B ---/---|         |---/--- Result
+--!              3   |  unit   |
+--! opcode ------/---|         |
+--!                  |         |
+--!                  +---------+
+--! 
+--! \endverbatim
+--!
+--! Function:
+--! -----------
+--! Table 1: Opcodes and operations of the logic unit.
+--!
+--! Bin | Opcode  | Functionality/Operation
+--! ----|---------|-------------------------------------------------------------------
+--! 000 | OP_AND  | AND A with B, R:=A AND B, bitwise AND, Z-flag bit is affected
+--! 001 | OP_OR   | OR A with B, R:=A OR B, bitwise OR,    Z-flag bit is affected
+--! 010 | OP_XOR  | XOR A with B, R:=A XOR B, bitwise XOR, Z-flag bit is affected
+--! 011 | OP_NOTA | NOT A, R:=NOT A,                       Z-flag bit is affected
+--! 100 | OP_SHLA | SHL A, R:=SHL A,                       flag bits are not affected
+--! 101 | OP_ROLA | ROL A, R:=ROL A,                       flag bits are not affected
+--! 110 | OP_SHRA | SHR A, R:=SHR A,                       flag bits are not affected
+--! 111 | OP_RORA | ROR A, R:=ROR A,                       flag bits are not affected
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -14,7 +72,10 @@ USE ieee.numeric_std.all;
 ENTITY logicUnit is
 
    GENERIC (
-      N: INTEGER := 4   --! logic unit is designed for 4-bits
+      N: INTEGER := 4  --! logic unit is designed for 4-bits
+      
+      --! Implement here CONSTANTS as GENERIC when required.
+      
    );
    
    PORT (
@@ -29,14 +90,16 @@ END ENTITY logicUnit;
 ARCHITECTURE implementation OF logicUnit IS
 BEGIN
 
---  #########################################################################
---  #########################################################################
---  ##                                                                     ##
---  ##                                                                     ##
---  ##  This file shall be replaced by the file produced in assignment 3   ##
---  ##                                                                     ##
---  ##                                                                     ##
---  #########################################################################
---  #########################################################################
+   --! Implement here the logic-unit that executes the operations as presented
+   --! in table 1.
+	R <= A AND B  	 	 	 					 WHEN F="000" ELSE
+		  A OR B  	 	 	 					 WHEN F="001" ELSE
+		  A XOR B 	 		 	 				 WHEN F="010" ELSE
+		  NOT A   	 	 	 					 WHEN F="011" ELSE
+		  A(N-2 downto 0) & '0'	 		 	 WHEN F="100" ELSE
+		  A(N-4) & A(N-1 downto 1)	       WHEN F="101" ELSE
+		  '0' & A(N-1 downto 1)	 		 	 WHEN F="110" ELSE
+		  A(N-2 downto 0) & A(N-1) 		 WHEN F="111" ELSE
+		  (OTHERS => '0');
 
 END ARCHITECTURE implementation;

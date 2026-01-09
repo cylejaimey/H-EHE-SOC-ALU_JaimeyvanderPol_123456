@@ -5,90 +5,122 @@
 --! \author    Remko Welling (WLGRW) remko.welling@han.nl
 --! \copyright HAN TF ELT/ESE Arnhem 
 --!
---! \todo Students shall replace this file for the result of assignment 3
+--! \todo Students that submit this code have to complete their details:
+--!
+--! -Student 1 name         : Merlijn Vruggink
+--! -Student 1 studentnumber: 2151024
+--! -Student 1 email address: m.vruggink@student.han.nl
+--! 
+--! -Student 2 name         : Christian Versluis
+--! -Student 2 studentnumber: 2147197
+--! -Student 2 email address: cvm@student.han.nl
+--!
+--!
+--! Version History:
+--! ----------------
+--!
+--! Nr:    |Date:      |Author: |Remarks:
+--! -------|-----------|--------|-----------------------------------
+--! 001    |18-10-2019 |WLGRW   |Inital version
+--! 002    |25-11-2020 |WLGRW   |Adapted for H-ESE-SOC class
+--! 003    |9-12-2020  |WLGRW   |Modifications for assignment
+--!
+--! \todo Add revsion history when executing these assignments.
+--!
+--! Design:
+--! -------
+--! Figure 1 presents the input-output diagram of the artithmetic unit.
+--! Depending on the opcode the artithmetic unit will apply the operation
+--! as specified in table 1.
+--! 
+--!
+--! \verbatim
+--!
+--!  Figure 1: Input-output diagram of the artithmetic unit.
+--! 
+--!                   +----------------+
+--!               n   |                |
+--!  Operand A ---/---|                |
+--!                   |                |
+--!               n   |                |
+--!  Operand B ---/---|                |
+--!                   | Arthmatic unit |   n+1
+--!               3   |                |---/--- Result R
+--!  Opcode F ----/---|                |
+--!                   |                |
+--!               4   |                |
+--!  Flags P -----/---|                |
+--!                   |                |
+--!                   +----------------+
+--!
+--! \endverbatim
+--!
+--! Function:
+--! -----------
+--! Table 1: Opcodes and operations of the artithmetic unit.
+--!
+--! Bin | Opcode  | Functionality/Operation
+--! ----|---------|--------------------------------------------------------------------------------------
+--! 000 | OP_CLRR | CLR R, clear R (R:=0), all flag bits are affected
+--! 001 | OP_INCA | INC A, Increment A, R:=A+1, all flag bits are affected 
+--! 010 | OP_DECA | DEC A, Decrement A, R:=A-1, all flag bits are affected
+--! 011 | OP_ADD  | ADD A with B, R:=A+B, all flag bits are affected
+--! 100 | OP_ADC  | ADC A with B and Carry, R:=A+B+C, all flag bits are affected
+--! 101 | OP_ADB  | ADB A with B and Carry, R:=A+B+C using BCD arithmetic, C and Z flag bits are affected
+--! 110 | OP_SUB  | SUB B from A, R:=A-B, flag bits are affected
+--! 111 | OP_SBC  | SBC B from A including C, R:=A-B-C, flag bits are affected
+--! 
 ------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC
-USE ieee.numeric_std.all;     --! UNSIGNED and SIGNED types
+USE ieee.numeric_std.all;     --! SIGNED
 ------------------------------------------------------------------------------
 ENTITY arithmeticUnit is
 
    GENERIC (
-      N: INTEGER := 4;  --! logic unit is designed for 4-bits
-      CONSTANT OP_CLRR: STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
-      CONSTANT OP_INCA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
-      CONSTANT OP_DECA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "010";
-      CONSTANT  OP_ADD: STD_LOGIC_VECTOR (2   DOWNTO 0) := "011";
-      CONSTANT  OP_ADC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "100";
-      CONSTANT  OP_ADB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "101";
-      CONSTANT  OP_SUB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "110";
-      CONSTANT  OP_SBC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "111"
+      N: INTEGER := 4  --! logic unit is designed for 4-bits
+      
+      --! Implement here CONSTANTS as GENERIC when required.
+      
    );
    
    PORT (
-      A : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0);
-      B : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0);
-      P : IN  STD_LOGIC_VECTOR (3   DOWNTO 0);
-      F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0);
-      R : OUT STD_LOGIC_VECTOR (N   DOWNTO 0)  -- 5 bits output including carry
+      A : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0); --! n-bit binary input
+      B : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0); --! n-bit binary input
+      P : IN  STD_LOGIC_VECTOR (3   DOWNTO 0); --! Flags input P(0)=Carry-bit
+      F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0); --! 3-bit opcode
+      R : OUT STD_LOGIC_VECTOR (N   DOWNTO 0)  --! n+1-bit binary output
    );
    
 END ENTITY arithmeticUnit;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation OF arithmeticUnit IS
-   -- Internal signal to hold the full result (5 bits)
-   SIGNAL temp_result : STD_LOGIC_VECTOR(N DOWNTO 0);
    
-   -- Helper signals for extended operands (extended to 5 bits for proper carry calculation)
-   SIGNAL A_ext, B_ext : UNSIGNED(N DOWNTO 0);
-   SIGNAL carry_in : UNSIGNED(N DOWNTO 0);
-   
+   -- Implement here the SIGNALS to your descretion
+	SIGNAL carry: UNSIGNED (N DOWNTO 0);
+	SIGNAL inputA : UNSIGNED (N DOWNTO 0);
+   SIGNAL inputB : UNSIGNED (N DOWNTO 0); 
+   SIGNAL result : UNSIGNED (N DOWNTO 0);
+ 
 BEGIN
 
-   -- Extend operands A and B to 5 bits (add leading zero)
-   A_ext <= UNSIGNED('0' & A);
-   B_ext <= UNSIGNED('0' & B);
-   
-   -- Extend carry input to 5 bits
-   carry_in <= (0 => P(0), OTHERS => '0');
-
-   -- Arithmetic operations with proper carry handling
-   PROCESS(A_ext, B_ext, carry_in, F)
-   BEGIN
-      CASE F IS
-         WHEN OP_CLRR =>
-            temp_result <= (OTHERS => '0');
-            
-         WHEN OP_INCA =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext + 1);
-            
-         WHEN OP_DECA =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext - 1);
-            
-         WHEN OP_ADD =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext + B_ext);
-            
-         WHEN OP_ADC =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext + B_ext + carry_in);
-            
-         WHEN OP_ADB =>
-            -- Add with BCD - for now implementing as regular add with carry
-            -- Full BCD implementation would require decimal adjustment
-            temp_result <= STD_LOGIC_VECTOR(A_ext + B_ext + carry_in);
-            
-         WHEN OP_SUB =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext - B_ext);
-            
-         WHEN OP_SBC =>
-            temp_result <= STD_LOGIC_VECTOR(A_ext - B_ext - carry_in);
-            
-         WHEN OTHERS =>
-            temp_result <= (OTHERS => '0');
-            
-      END CASE;
-   END PROCESS;
-   
-   -- Assign the result to output
-   R <= temp_result;
+   -- Implement here your arithmetic unit.
+	carry <= (0 => P(0), OTHERS => '0');
 	
-	END ARCHITECTURE implementation;
+	inputA <= RESIZE(UNSIGNED(a), N+1);
+   inputB <= RESIZE(UNSIGNED(b), N+1);
+	
+
+	result <= 	inputA + 1 			          WHEN F="001"                                 ELSE
+					inputA - 1 						 WHEN F="010"                                 ELSE
+					inputA + inputB 				 WHEN F="011"                                 ELSE
+					inputA + inputB + carry 	 WHEN F="100"                                 ELSE
+					inputA + inputB + carry + 6 WHEN inputA + inputB + carry > 9 AND F="101" ELSE	
+					inputA + inputB + carry     WHEN inputA + inputB + carry < 9 AND F="101" ELSE 
+					inputA - inputB 				 WHEN F="110"                                 ELSE
+					inputA - inputB - carry 	 WHEN F="111"                                 ELSE
+					(OTHERS => '0');
+		
+	R <= STD_LOGIC_VECTOR(result);
+		
+END ARCHITECTURE implementation;

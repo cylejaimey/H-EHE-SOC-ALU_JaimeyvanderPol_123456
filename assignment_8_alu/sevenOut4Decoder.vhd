@@ -54,27 +54,26 @@ generic (
 	constant b_hex_D:      STD_LOGIC_VECTOR(0 to 3) := "1101";
 	constant b_hex_E:      STD_LOGIC_VECTOR(0 to 3) := "1110";
 	constant b_hex_F:      STD_LOGIC_VECTOR(0 to 3) := "1111";
-	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 3) := "0000";
-	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 3) := "0001"
+	constant b_hex_plus:   STD_LOGIC_VECTOR(0 to 3) := "0001";
+	constant b_hex_min:    STD_LOGIC_VECTOR(0 to 3) := "0010"
 	
 	);
 
    PORT (
       input   : IN  STD_LOGIC_VECTOR(3 DOWNTO 0);
-      dot     : IN  STD_LOGIC;                   
-      ctrl    : IN  STD_LOGIC;                   
-      display : OUT STD_LOGIC_VECTOR(0 TO 7);
-		normal  : INOUT STD_LOGIC_VECTOR(0 TO 6);
-		extended: INOUT STD_LOGIC_VECTOR(0 TO 6)		
+      dot     : IN  STD_LOGIC;
+      ctrl    : IN  STD_LOGIC;
+      display : OUT STD_LOGIC_VECTOR(0 TO 7)	
    );
    
 END ENTITY sevenOut4Decoder;
 ------------------------------------------------------------------------------
 ARCHITECTURE implementation OF sevenOut4Decoder IS
+   SIGNAL normal : STD_LOGIC_VECTOR(0 TO 6);
+   SIGNAL outputChar  : STD_LOGIC_VECTOR(0 TO 6);
 BEGIN
 
    -- Step 1: Connect port "dot" to the dot-segment in the HEX display.
-display(7) <= NOT dot;
    -- Display decoders. This code is using "WITH - SELECT" to encode 6 segments on
    -- a HEX diplay. This code is using the CONSTANTS that are defined at GENERIC.
    -- Step 2: Implement here the multiplexer that will present the normal characters.
@@ -100,15 +99,17 @@ with input select
 	
    
    -- Step 3: Implement here the multiplexter that will the extended characters.
-	WITH input SELECT
-		extended(0 To 6) <=	hex_plus  WHEN b_hex_plus,
-								   hex_min   WHEN b_hex_min,
-								   "0000000" WHEN OTHERS;
-   -- Step 4: Implement here the  selector of the normal characters and the 
-   -- extended characters using the ctrl signal.
-	WITH ctrl SELECT
-		display(0 TO 6)  <=	normal WHEN '0',
-									extended WHEN '1';
+   WITH input SELECT
+      outputChar(0 TO 6) <= hex_plus WHEN b_hex_plus,
+                            hex_min  WHEN b_hex_min,
+                            hex_off  WHEN OTHERS;
+
+   -- Select between normal and extended characters
+   display(0 TO 6) <= normal WHEN ctrl = '0' ELSE 
+                      outputChar;
+   
+   -- Dot control
+   display(7) <= NOT dot;
 
 
 END ARCHITECTURE implementation;

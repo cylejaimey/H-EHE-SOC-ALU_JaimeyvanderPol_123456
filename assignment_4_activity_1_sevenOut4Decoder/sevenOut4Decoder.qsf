@@ -221,5 +221,8 @@ set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_RO
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_location_assignment PIN_A12 -to ctrl -comment SW[4]
 set_location_assignment PIN_A13 -to dot -comment SW[6]
-set_location_assignment PIN_C14 -to HEX0[0] -comment HEX0[0]
+set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform12.vwf
+set_location_assignment PIN_C14 -to display[0] -comment HEX0[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VECTOR_WAVEFORM_FILE output_files/Waveform13.vwf

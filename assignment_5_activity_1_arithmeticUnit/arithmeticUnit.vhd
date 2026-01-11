@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! -Student 1 name         : Jaimey van der Pol
---! -Student 1 studentnumber: 2149797
---! -Student 1 email address: jaimeyvanderpol@gmail.com 
+--! -Student 1 name         : Merlijn Vruggink
+--! -Student 1 studentnumber: 2151024
+--! -Student 1 email address: m.vruggink@student.han.nl
 --! 
---! -Student 2 name         : 
---! -Student 2 studentnumber: 
---! -Student 2 email address: 
+--! -Student 2 name         : Christian Versluis
+--! -Student 2 studentnumber: 2147197
+--! -Student 2 email address: cvm@student.han.nl
 --!
 --!
 --! Version History:
@@ -74,22 +74,14 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;  --! STD_LOGIC
 USE ieee.numeric_std.all;     --! SIGNED
-USE ieee.std_logic_unsigned.all;
 ------------------------------------------------------------------------------
 ENTITY arithmeticUnit is
 
    GENERIC (
-      N: INTEGER := 4;  --! logic unit is designed for 4-bits
-			
+      N: INTEGER := 4  --! logic unit is designed for 4-bits
+      
       --! Implement here CONSTANTS as GENERIC when required.
-     CONSTANT OP_CLRR: STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
-	  CONSTANT OP_INCA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
-	  CONSTANT OP_DECA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "010";
-	  CONSTANT  OP_ADD: STD_LOGIC_VECTOR (2   DOWNTO 0) := "011";
-	  CONSTANT  OP_ADC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "100";
-	  CONSTANT  OP_ADB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "101";
-	  CONSTANT  OP_SUB: STD_LOGIC_VECTOR (2   DOWNTO 0) := "110";
-	  CONSTANT  OP_SBC: STD_LOGIC_VECTOR (2   DOWNTO 0) := "111"
+      
    );
    
    PORT (
@@ -97,30 +89,38 @@ ENTITY arithmeticUnit is
       B : IN  STD_LOGIC_VECTOR (N-1 DOWNTO 0); --! n-bit binary input
       P : IN  STD_LOGIC_VECTOR (3   DOWNTO 0); --! Flags input P(0)=Carry-bit
       F : IN  STD_LOGIC_VECTOR (2   DOWNTO 0); --! 3-bit opcode
-      R : OUT STD_LOGIC_VECTOR (3   DOWNTO 0)  --! n+1-bit binary output
+      R : OUT STD_LOGIC_VECTOR (N   DOWNTO 0)  --! n+1-bit binary output
    );
    
 END ENTITY arithmeticUnit;
--------------------------------------------------------- ============================================================================================================================================================================================================================================----------------------
+------------------------------------------------------------------------------
 ARCHITECTURE implementation OF arithmeticUnit IS
    
    -- Implement here the SIGNALS to your descretion
-    
+	SIGNAL carry: UNSIGNED (N DOWNTO 0);
+	SIGNAL inputA : UNSIGNED (N DOWNTO 0);
+   SIGNAL inputB : UNSIGNED (N DOWNTO 0); 
+   SIGNAL result : UNSIGNED (N DOWNTO 0);
+ 
 BEGIN
 
+   -- Implement here your arithmetic unit.
+	carry <= (0 => P(0), OTHERS => '0');
+	
+	inputA <= RESIZE(UNSIGNED(a), N+1);
+   inputB <= RESIZE(UNSIGNED(b), N+1);
+	
 
-
-WITH F SELECT
-  R(3 DOWNTO 0) <=
-"0000" WHEN OP_CLRR,
- A + 1 WHEN OP_INCA,
- A - 1 WHEN OP_DECA,
- A + B WHEN OP_ADD,
- A + B + P(0) WHEN OP_ADC,
- A + B + P(0) WHEN OP_ADB,
- A - B WHEN OP_SUB,
- A - B - P(0) WHEN OP_SBC,
- NULL  WHEN OTHERS;
-	    
-
+	result <= 	inputA + 1 			          WHEN F="001"                                 ELSE
+					inputA - 1 						 WHEN F="010"                                 ELSE
+					inputA + inputB 				 WHEN F="011"                                 ELSE
+					inputA + inputB + carry 	 WHEN F="100"                                 ELSE
+					inputA + inputB + carry + 6 WHEN inputA + inputB + carry > 9 AND F="101" ELSE	
+					inputA + inputB + carry     WHEN inputA + inputB + carry < 9 AND F="101" ELSE 
+					inputA - inputB 				 WHEN F="110"                                 ELSE
+					inputA - inputB - carry 	 WHEN F="111"                                 ELSE
+					(OTHERS => '0');
+		
+	R <= STD_LOGIC_VECTOR(result);
+		
 END ARCHITECTURE implementation;

@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! -Student 1 name         : 
---! -Student 1 studentnumber: 
---! -Student 1 email address: 
+--! -Student 1 name         : Merlijn Vruggink
+--! -Student 1 studentnumber: 2151024
+--! -Student 1 email address: m.vruggink@student.han.nl
 --! 
---! -Student 2 name         : 
---! -Student 2 studentnumber: 
---! -Student 2 email address: 
+--! -Student 2 name         : Christian Versluis
+--! -Student 2 studentnumber: 2147197
+--! -Student 2 email address: cvm@student.han.nl
 --!
 --!
 --! Version History:
@@ -72,17 +72,9 @@ USE ieee.numeric_std.all;
 ENTITY logicUnit is
 
    GENERIC (
-      N: INTEGER := 4;  --! logic unit is designed for 4-bits
+      N: INTEGER := 4  --! logic unit is designed for 4-bits
       
       --! Implement here CONSTANTS as GENERIC when required.
-	  CONSTANT OP_AND:  STD_LOGIC_VECTOR (2   DOWNTO 0) := "000";
-	  CONSTANT OP_OR:   STD_LOGIC_VECTOR (2   DOWNTO 0) := "001";
-	  CONSTANT OP_XOR:  STD_LOGIC_VECTOR (2   DOWNTO 0) := "010";
-	  CONSTANT OP_NOTA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "011";
-	  CONSTANT OP_SHLA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "100";
-	  CONSTANT OP_ROLA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "101";
-	  CONSTANT OP_SHRA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "110";
-	  CONSTANT OP_RORA: STD_LOGIC_VECTOR (2   DOWNTO 0) := "111"
       
    );
    
@@ -100,16 +92,14 @@ BEGIN
 
    --! Implement here the logic-unit that executes the operations as presented
    --! in table 1.
-WITH F SELECT
- R(3 DOWNTO 0) <=
- A AND B WHEN OP_AND,
- A OR B  WHEN OP_OR,
- A XOR B WHEN OP_XOR,
- NOT A   WHEN OP_NOTA,
- A(N-2 DOWNTO 0) & '0' WHEN OP_SHLA,
- A(n-2 downto 0) & A(N-1)  WHEN OP_ROLA,
- '0' & A(N-1 DOWNTO 1)  WHEN OP_SHRA,
- A(0) & A(N-1 DOWNTO 1)   WHEN OP_RORA,
- NULL    WHEN OTHERS;
- 
+	R <= A AND B  	 	 	 					 WHEN F="000" ELSE
+		  A OR B  	 	 	 					 WHEN F="001" ELSE
+		  A XOR B 	 		 	 				 WHEN F="010" ELSE
+		  NOT A   	 	 	 					 WHEN F="011" ELSE
+		  A(N-2 downto 0) & '0'	 		 	 WHEN F="100" ELSE
+		  A(N-4) & A(N-1 downto 1)	       WHEN F="101" ELSE
+		  '0' & A(N-1 downto 1)	 		 	 WHEN F="110" ELSE
+		  A(N-2 downto 0) & A(N-1) 		 WHEN F="111" ELSE
+		  (OTHERS => '0');
+
 END ARCHITECTURE implementation;

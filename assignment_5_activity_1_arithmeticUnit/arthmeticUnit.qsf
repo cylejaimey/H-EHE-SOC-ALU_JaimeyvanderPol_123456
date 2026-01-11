@@ -234,3 +234,4 @@ set_location_assignment PIN_C13 -to T[1] -comment LEDR[5]
 set_location_assignment PIN_E14 -to T[2] -comment LEDR[6]
 set_location_assignment PIN_D14 -to T[3] -comment LEDR[7]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform.vwf

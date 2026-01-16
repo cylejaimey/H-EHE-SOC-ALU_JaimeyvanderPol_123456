@@ -7,13 +7,13 @@
 --!
 --! \todo Students that submit this code have to complete their details:
 --!
---! -Student 1 name         : Merlijn Vruggink
---! -Student 1 studentnumber: 2151024
---! -Student 1 email address: m.vruggink@student.han.nl
+--! -Student 1 name         : Mohanad Shater
+--! -Student 1 studentnumber: 
+--! -Student 1 email address: 
 --! 
---! -Student 2 name         : Christian Versluis
---! -Student 2 studentnumber: 2147197
---! -Student 2 email address: cvm@student.han.nl
+--! -Student 2 name         : Jaimey van der Pol
+--! -Student 2 studentnumber: 
+--! -Student 2 email address: 
 --!
 --!
 --! Version History:
